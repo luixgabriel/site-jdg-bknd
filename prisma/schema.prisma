@@ -11,8 +11,13 @@ datasource db {
 }
 
 model User {
-  id        String @id @default(uuid())
-  email     String @unique
-  firstName String
-  lastName  String
+  id                          String    @id @default(uuid())
+  name                        String
+  email                       String    @unique
+  password                    String
+  stack                       String[]
+  role                        String
+  authenticationCode          Int?
+  authenticated               Boolean   @default(false)
+  authenticationCodeCreatedAt DateTime?
 }

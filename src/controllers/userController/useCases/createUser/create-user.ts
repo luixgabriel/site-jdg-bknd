@@ -1,7 +1,26 @@
-import { IController, HttpRequest, HttpResponse } from '@/interfaces/protocols'
+import { IController, HttpRequest, HttpResponse } from '@/interfaces/https'
+import { ICreateUserParams, ICreateUserRepository } from './protocols'
+import { User } from '@/models/user'
 
-export class createUserController implements IController {
-  handle(httpRequest: HttpRequest<unknown>): Promise<HttpResponse<unknown>> {
-    throw new Error('Method not implemented.')
+export class CreateUserController implements IController {
+  constructor(private readonly createUserRepository: ICreateUserRepository) {
+    createUserRepository = this.createUserRepository
+  }
+
+  async handle(
+    httpRequest: HttpRequest<ICreateUserParams>,
+  ): Promise<HttpResponse<User | string>> {
+    try {
+      const user = await this.createUserRepository.createUser(httpRequest.body)
+      return {
+        statusCode: 200,
+        body: user,
+      }
+    } catch (error) {
+      return {
+        statusCode: 400,
+        body: 'Error',
+      }
+    }
   }
 }
