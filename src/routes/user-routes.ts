@@ -3,13 +3,18 @@ import { CreateUserController } from '@/controllers/userController/useCases/crea
 import { PrismaCreateUserRepository } from '@/repositories/createUser/prisma-create-user'
 const routes = Router()
 
-routes.post('/', async (req: Request, res: Response) => {
+routes.get('/test', async (req: Request, res: Response) => {
+  res.send('oi')
+})
+
+routes.post('/save', async (req: Request, res: Response) => {
   const prismaCreateUserRepository = new PrismaCreateUserRepository()
   const createUserController = new CreateUserController(
     prismaCreateUserRepository,
   )
-  const { body, statusCode } = await createUserController.handle(req.body)
-  res.status(statusCode).send(body)
+  console.log(req.body)
+  const { body, statusCode } = await createUserController.handle(req)
+  res.status(statusCode).json(body)
 })
 
 export default routes

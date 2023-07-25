@@ -1,11 +1,12 @@
 import express from 'express'
-import routes from './routes/route'
+import 'module-alias/register'
+import userRoutes from '../src/routes/user-routes'
 
 const app = express()
 const port = 3000
 
-app.use('/', routes)
 app.use(express.json())
+app.use('/', userRoutes)
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`)

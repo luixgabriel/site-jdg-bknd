@@ -11,6 +11,8 @@ export class PrismaCreateUserRepository implements ICreateUserRepository {
       data: params,
     })
 
+    console.log(user)
+
     return user
   }
 }
