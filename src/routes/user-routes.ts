@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express'
 import { CreateUserController } from '@/controllers/userController/useCases/createUser/create-user'
-import { PrismaCreateUserRepository } from '@/repositories/createUser/prisma-create-user'
+import { PrismaCreateUserRepository } from '@/repositories/userRepositories/createUser/prisma-create-user'
 const routes = Router()
 
 routes.get('/test', async (req: Request, res: Response) => {
@@ -12,7 +12,6 @@ routes.post('/save', async (req: Request, res: Response) => {
   const createUserController = new CreateUserController(
     prismaCreateUserRepository,
   )
-  console.log(req.body)
   const { body, statusCode } = await createUserController.handle(req)
   res.status(statusCode).json(body)
 })
