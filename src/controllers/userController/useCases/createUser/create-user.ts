@@ -17,6 +17,7 @@ export class CreateUserController implements IController {
         body: user,
       }
     } catch (error) {
+      console.log(error)
       return {
         statusCode: 400,
         body: 'Error',
