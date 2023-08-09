@@ -31,3 +31,37 @@ model Post {
   author      User    @relation(fields: [authorId], references: [id])
   authorId    String
 }
+
+model Candidate {
+  id     String           @id @default(uuid())
+  name   String
+  email  String           @unique
+  cv     String
+  stack  String[]
+  job_id JobOpportunity[]
+}
+
+model JobOpportunity {
+  id          String      @id @default(uuid())
+  title       String
+  description String
+  status      String
+  stack       String[]
+  candidateId Candidate[]
+}
+
+model Voluntary {
+  id    String   @id @default(uuid())
+  name  String
+  email String   @unique
+  stack String[]
+}
+
+model Client {
+  id    String  @id @default(uuid())
+  name  String
+  email String  @unique
+  logo  String
+  CPF   String?
+  CNPJ  String?
+}

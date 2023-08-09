@@ -7,8 +7,8 @@ export interface ICreateUserParams {
   stack: string[]
   role: string
   authenticated: boolean
-  authenticationCode: number
-  authenticationCodeCreatedAt: Date
+  authenticationCode?: number
+  authenticationCodeCreatedAt?: Date
 }
 
 export interface ICreateUserRepository {

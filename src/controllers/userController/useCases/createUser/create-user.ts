@@ -1,6 +1,7 @@
 import { IController, HttpRequest, HttpResponse } from '@/interfaces/https'
 import { ICreateUserParams, ICreateUserRepository } from './protocols'
 import { User } from '@/models/user'
+import { z } from 'zod'
 
 export class CreateUserController implements IController {
   constructor(private readonly createUserRepository: ICreateUserRepository) {
@@ -11,7 +12,20 @@ export class CreateUserController implements IController {
     httpRequest: HttpRequest<ICreateUserParams>,
   ): Promise<HttpResponse<User | string>> {
     try {
-      const user = await this.createUserRepository.createUser(httpRequest.body)
+      const User = z.object({
+        name: z.string(),
+        email: z.string().email(),
+        password: z.string(),
+        stack: z.array(z.string()),
+        role: z.string(),
+        authenticated: z.boolean().default(false),
+        authenticationCode: z.number().optional(),
+        authenticationCodeCreatedAt: z.date().optional(),
+      })
+
+      const user = await this.createUserRepository.createUser(
+        User.parse(httpRequest.body),
+      )
       return {
         statusCode: 200,
         body: user,
@@ -20,7 +34,7 @@ export class CreateUserController implements IController {
       console.log(error)
       return {
         statusCode: 400,
-        body: 'Error',
+        body: error,
       }
     }
   }
