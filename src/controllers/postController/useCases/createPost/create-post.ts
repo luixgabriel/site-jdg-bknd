@@ -9,7 +9,7 @@ export class CreatePostController implements IController {
 
   async handle(
     httpRequest: HttpRequest<ICreatePostParams>,
-  ): Promise<HttpResponse<Post | string>> {
+  ): Promise<HttpResponse<Post | any>> {
     try {
       const post = await this.createPostRepository.createPost(httpRequest.body)
       return {
@@ -20,9 +20,7 @@ export class CreatePostController implements IController {
       console.log(error)
       return {
         statusCode: 400,
-        body: {
-          msg: 'Error',
-        },
+        body: error,
       }
     }
   }
