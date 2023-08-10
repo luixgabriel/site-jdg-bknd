@@ -10,6 +10,8 @@ import { PrismaGetAllPostsRepository } from '@/repositories/postRepositories/get
 import { GetAllPostsController } from '@/controllers/postController/useCases/getPosts/getAll-posts'
 import { PrismaEditPostRepository } from '@/repositories/postRepositories/editPost/prisma-edit-post'
 import { EditPostController } from '@/controllers/postController/useCases/editPost/edit-post'
+import { PrismaDeletePostRepository } from '@/repositories/postRepositories/deletePost/prisma-delete-post'
+import { DeletePostController } from '@/controllers/postController/useCases/deletePost/delete-post'
 
 const routes = Router()
 const upload = multer(multerConfig)
@@ -56,5 +58,15 @@ routes.patch(
     res.status(statusCode).json(body)
   },
 )
+
+// Delete post
+routes.delete('/post/:id', async (req: Request, res: Response) => {
+  const prismaDeletePostsRepository = new PrismaDeletePostRepository()
+  const deletePostController = new DeletePostController(
+    prismaDeletePostsRepository,
+  )
+  const { body, statusCode } = await deletePostController.handle(req)
+  res.status(statusCode).json(body)
+})
 
 export default routes
