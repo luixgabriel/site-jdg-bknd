@@ -27,6 +27,8 @@ export const validateAndTransformEmail = (
     .toLowerCase()
     .trim()
 
+  console.log(formattedEmail)
+
   req.body.email = formattedEmail
 
   next()

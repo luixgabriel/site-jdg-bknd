@@ -3,9 +3,12 @@ import { PrismaCreatePostRepository } from '@/repositories/postRepositories/crea
 import { CreatePostController } from '@/controllers/postController/useCases/createPost/create-post'
 import { PrismaGetAllPostsRepository } from '@/repositories/postRepositories/getPosts/prisma-get-all-posts'
 import { GetAllPostsController } from '@/controllers/postController/useCases/getPosts/getAll-posts'
+import { PrismaEditPostRepository } from '@/repositories/postRepositories/editPost/prisma-edit-post'
+import { EditPostController } from '@/controllers/postController/useCases/editPost/edit-post'
 
 const routes = Router()
 
+// GET ALL POSTS
 routes.get('/post', async (req: Request, res: Response) => {
   const prismaGetAllPostsRepository = new PrismaGetAllPostsRepository()
   const getAllPostController = new GetAllPostsController(
@@ -15,12 +18,26 @@ routes.get('/post', async (req: Request, res: Response) => {
   res.status(statusCode).json(body)
 })
 
+// CREATE POST
 routes.post('/post', async (req: Request, res: Response) => {
   const prismaCreatePostRepository = new PrismaCreatePostRepository()
   const createPostController = new CreatePostController(
     prismaCreatePostRepository,
   )
   const { body, statusCode } = await createPostController.handle(req)
+  res.status(statusCode).json(body)
+})
+
+routes.patch('/post/:id', async (req: Request, res: Response) => {
+  const prismaEditPostRepository = new PrismaEditPostRepository()
+  const editPostController = new EditPostController(prismaEditPostRepository)
+
+  if (Object.keys(req.body).length === 0) {
+    return res
+      .status(400)
+      .json({ msg: 'At least one field must be provided for update.' })
+  }
+  const { body, statusCode } = await editPostController.handle(req)
   res.status(statusCode).json(body)
 })
 
