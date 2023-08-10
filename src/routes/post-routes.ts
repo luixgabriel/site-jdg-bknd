@@ -29,6 +29,7 @@ routes.post(
   '/post',
   upload.single('IMAGE'),
   async (req: Request, res: Response) => {
+    console.log(req.file)
     const prismaCreatePostRepository = new PrismaCreatePostRepository()
     const createPostController = new CreatePostController(
       prismaCreatePostRepository,
@@ -38,6 +39,7 @@ routes.post(
   },
 )
 
+// Edit post
 routes.patch(
   '/post/:id',
   upload.single('IMAGE'),
