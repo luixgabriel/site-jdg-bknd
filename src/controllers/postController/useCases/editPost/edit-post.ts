@@ -12,9 +12,10 @@ export class EditPostController implements IController {
   async handle(
     httpRequest: HttpRequest<IEditPostParams>,
   ): Promise<HttpResponse<Post | any>> {
+    let body = httpRequest.body
     const id = httpRequest.params.id
-    const imagePost = httpRequest.file.filename
-    const body = generateImage(httpRequest.file.filename, httpRequest.body)
+    if (httpRequest.file)
+      body = generateImage(httpRequest.file.filename, httpRequest.body)
 
     if (!id) {
       return {
