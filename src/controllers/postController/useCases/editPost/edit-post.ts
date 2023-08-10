@@ -2,6 +2,7 @@ import { IController, HttpRequest, HttpResponse } from '@/interfaces/https'
 
 import { Post } from '@prisma/client'
 import { IEditPostParams, IEditPostRepository } from './protocols'
+import generateImage from '@/utils/generateImage'
 
 export class EditPostController implements IController {
   constructor(private readonly editPostRepository: IEditPostRepository) {
@@ -11,9 +12,10 @@ export class EditPostController implements IController {
   async handle(
     httpRequest: HttpRequest<IEditPostParams>,
   ): Promise<HttpResponse<Post | any>> {
-    const body = httpRequest.body
-    console.log(body)
     const id = httpRequest.params.id
+    const imagePost = httpRequest.file.filename
+    const body = generateImage(httpRequest.file.filename, httpRequest.body)
+
     if (!id) {
       return {
         statusCode: 400,
