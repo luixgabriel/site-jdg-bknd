@@ -12,7 +12,7 @@ import { PrismaEditPostRepository } from '@/repositories/postRepositories/editPo
 import { EditPostController } from '@/controllers/postController/useCases/editPost/edit-post'
 import { PrismaDeletePostRepository } from '@/repositories/postRepositories/deletePost/prisma-delete-post'
 import { DeletePostController } from '@/controllers/postController/useCases/deletePost/delete-post'
-import { PrismaGetPostRepository } from '@/repositories/getPost/prisma-get-post'
+import { PrismaGetPostRepository } from '@/repositories/postRepositories/getPost/prisma-get-post'
 import { GetPostController } from '@/controllers/postController/useCases/getPost/get-post'
 
 const routes = Router()
