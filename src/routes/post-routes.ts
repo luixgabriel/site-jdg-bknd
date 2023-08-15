@@ -12,6 +12,8 @@ import { PrismaEditPostRepository } from '@/repositories/postRepositories/editPo
 import { EditPostController } from '@/controllers/postController/useCases/editPost/edit-post'
 import { PrismaDeletePostRepository } from '@/repositories/postRepositories/deletePost/prisma-delete-post'
 import { DeletePostController } from '@/controllers/postController/useCases/deletePost/delete-post'
+import { PrismaGetPostRepository } from '@/repositories/getPost/prisma-get-post'
+import { GetPostController } from '@/controllers/postController/useCases/getPost/get-post'
 
 const routes = Router()
 const upload = multer(multerConfig)
@@ -23,6 +25,14 @@ routes.get('/post', async (req: Request, res: Response) => {
     prismaGetAllPostsRepository,
   )
   const { body, statusCode } = await getAllPostController.handle()
+  res.status(statusCode).json(body)
+})
+
+// GET POST BY ID
+routes.get('/post/:id', async (req: Request, res: Response) => {
+  const prismaGetPostRepository = new PrismaGetPostRepository()
+  const getPostController = new GetPostController(prismaGetPostRepository)
+  const { body, statusCode } = await getPostController.handle(req)
   res.status(statusCode).json(body)
 })
 

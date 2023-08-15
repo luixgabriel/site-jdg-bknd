@@ -34,12 +34,13 @@ model Post {
 }
 
 model Candidate {
-  id     String           @id @default(uuid())
-  name   String
-  email  String           @unique
-  cv     String
-  stack  String[]
-  job_id JobOpportunity[]
+  id        String           @id @default(uuid())
+  name      String
+  email     String           @unique
+  telephone String
+  cv        String
+  stack     String[]
+  job_id    JobOpportunity[]
 }
 
 model JobOpportunity {
