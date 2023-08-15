@@ -7,12 +7,12 @@ import { Post } from '@prisma/client'
 
 export class PrismaEditPostRepository implements IEditPostRepository {
   async editPost(id: string, params: IEditPostParams): Promise<Post> {
-    const updatePost = await prisma.post.update({
+    const updatedPost = await prisma.post.update({
       where: {
         id,
       },
       data: params,
     })
-    return updatePost
+    return updatedPost
   }
 }

@@ -1,13 +1,24 @@
 import { CreateVoluntaryController } from '@/controllers/voluntaryController/useCases/createVoluntary/createVouluntary'
 import { DeleteVoluntaryController } from '@/controllers/voluntaryController/useCases/deleteVoluntary/deleteVoluntary'
+import { EditVoluntaryController } from '@/controllers/voluntaryController/useCases/editVoluntary/edit-voluntary'
+import { GetAllVoluntarysController } from '@/controllers/voluntaryController/useCases/getVoluntarys/getAll-voluntarys'
 import { PrismaCreateVoluntaryRepository } from '@/repositories/voluntaryRepositories/createVoluntary/prisma-create-voluntary'
 import { PrismaDeleteVoluntaryRepository } from '@/repositories/voluntaryRepositories/deleteVoluntary/prisma-delete-voluntary'
+import { PrismaEditVoluntaryRepository } from '@/repositories/voluntaryRepositories/editVoluntary/prisma-edit-voluntary'
+import { PrismaGetAllVoluntarysRepository } from '@/repositories/voluntaryRepositories/getVoluntarys/prisma-get-all-voluntarys'
 import { Router, Request, Response } from 'express'
 
 const routes = Router()
 
-routes.get('/test', async (req: Request, res: Response) => {
-  res.send('oi')
+// Get all voluntarys
+routes.get('/voluntary', async (req: Request, res: Response) => {
+  const prismaGetAllVoluntarysRepository =
+    new PrismaGetAllVoluntarysRepository()
+  const getAllVoluntaryController = new GetAllVoluntarysController(
+    prismaGetAllVoluntarysRepository,
+  )
+  const { body, statusCode } = await getAllVoluntaryController.handle()
+  res.status(statusCode).json(body)
 })
 
 // Create voluntary
@@ -27,6 +38,22 @@ routes.delete('/voluntary/:id', async (req: Request, res: Response) => {
     prismaDeleteVoluntaryRepository,
   )
   const { body, statusCode } = await deleteVoluntaryController.handle(req)
+  res.status(statusCode).json(body)
+})
+
+// Update voluntary
+routes.patch('/voluntary/:id', async (req: Request, res: Response) => {
+  const prismaEditVoluntaryRepository = new PrismaEditVoluntaryRepository()
+  const editVoluntaryController = new EditVoluntaryController(
+    prismaEditVoluntaryRepository,
+  )
+
+  if (Object.keys(req.body).length === 0) {
+    return res
+      .status(400)
+      .json({ msg: 'At least one field must be provided for update.' })
+  }
+  const { body, statusCode } = await editVoluntaryController.handle(req)
   res.status(statusCode).json(body)
 })
 

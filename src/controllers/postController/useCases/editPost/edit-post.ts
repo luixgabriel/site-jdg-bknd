@@ -26,10 +26,10 @@ export class EditPostController implements IController {
       }
     }
     try {
-      const updatePost = await this.editPostRepository.editPost(id, body)
+      const updatedPost = await this.editPostRepository.editPost(id, body)
       return {
         statusCode: 200,
-        body: updatePost,
+        body: updatedPost,
       }
     } catch (error) {
       console.log(error)

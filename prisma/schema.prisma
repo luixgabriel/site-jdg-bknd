@@ -39,6 +39,8 @@ model Candidate {
   email     String           @unique
   telephone String
   cv        String
+  github    String
+  linkedin  String
   stack     String[]
   job_id    JobOpportunity[]
 }
@@ -60,10 +62,9 @@ model Voluntary {
 }
 
 model Client {
-  id    String  @id @default(uuid())
-  name  String
-  email String  @unique
-  logo  String
-  CPF   String?
-  CNPJ  String?
+  id       String @id @default(uuid())
+  name     String
+  email    String @unique
+  logo     String
+  document String
 }
