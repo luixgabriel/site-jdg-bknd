@@ -1,8 +1,8 @@
 import { IController, HttpRequest, HttpResponse } from '@/interfaces/https'
-
 import { Post } from '@prisma/client'
 import { IEditPostParams, IEditPostRepository } from './protocols'
 import generateImage from '@/utils/generateImage'
+import { ok } from '@/helpers/http-helpers'
 
 export class EditPostController implements IController {
   constructor(private readonly editPostRepository: IEditPostRepository) {
@@ -16,21 +16,9 @@ export class EditPostController implements IController {
     const id = httpRequest.params.id
     if (httpRequest.file)
       body = generateImage(httpRequest.file.filename, httpRequest.body)
-
-    if (!id) {
-      return {
-        statusCode: 400,
-        body: {
-          msg: 'Missing ID',
-        },
-      }
-    }
     try {
       const updatedPost = await this.editPostRepository.editPost(id, body)
-      return {
-        statusCode: 200,
-        body: updatedPost,
-      }
+      return ok(updatedPost)
     } catch (error) {
       console.log(error)
       return {
