@@ -19,7 +19,7 @@ export const verifyAuthenticationCode = async (req: Request, res: Response) => {
       return res.status(403).json({ message: 'User already authenticated' })
     }
 
-    if(!user.authenticationCodeCreatedAt){
+    if(!user.authenticationCodeCreatedAt || !user.authenticationCode){
       return res.status(400).json({ message: 'Authentication code does not exist!'})
     }
 
