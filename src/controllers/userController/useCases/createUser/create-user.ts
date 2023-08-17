@@ -1,7 +1,7 @@
 import { IController, HttpRequest, HttpResponse } from '@/interfaces/https'
 import { ICreateUserParams, ICreateUserRepository } from './protocols'
-import { User } from '@/models/user'
 import { z } from 'zod'
+import { User } from '@prisma/client'
 
 export class CreateUserController implements IController {
   constructor(private readonly createUserRepository: ICreateUserRepository) {

@@ -1,4 +1,4 @@
-import { HttpRequest, HttpResponse, IController } from '@/interfaces/https'
+import { HttpResponse, IController } from '@/interfaces/https'
 import { Post } from '@prisma/client'
 import { IGetAllPostsRepository } from './protocols'
 

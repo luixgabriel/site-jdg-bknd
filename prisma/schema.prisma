@@ -41,7 +41,6 @@ model Candidate {
   cv        String
   github    String
   linkedin  String
-  stack     String[]
   job_id    JobOpportunity[]
 }
 
