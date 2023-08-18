@@ -16,15 +16,11 @@ interface ErrorResponse {
 
 export const login = async (req: Request, res: Response<LoginResponse | ErrorResponse>) => {
   const {email, password} = req.body
+
   try {
-
     const userResponse = await authenticateUser(email, password)
-
     return res.status(200).json(userResponse);
-  } catch (error) {
-    const errorResponse: ErrorResponse = {
-      error: 'Error logging in',
-    };
-    return res.status(500).json(errorResponse);
+  } catch (error: any) {
+    return res.status(500).json({error: error.message});
   }
 };

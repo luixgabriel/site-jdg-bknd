@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { createUserPrisma } from '@/repositories/userRepositories/createUser/createUser/prisma-create-user';
+import { createUserPrisma } from '@/repositories/userRepositories/createUser/prisma-create-user';
 
 export const createUser = async (req: Request, res: Response) => {
   try {
@@ -13,7 +13,7 @@ export const createUser = async (req: Request, res: Response) => {
     };
 
     return res.status(201).json(newUserResponse);
-  } catch (error) {
-    return res.status(500).json({ error: 'Error creating user' });
+  } catch (error: any) {
+    return res.status(500).json({ error: error.message });
   }
 };

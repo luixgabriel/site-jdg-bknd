@@ -30,7 +30,7 @@ export const authenticateUser = async (email: string, password: string) => {
       stack: user.stack,
       token,
     };
-  } catch (error) {
-    throw new Error('Error authenticating user');
+  } catch (error: any) {
+    throw new Error(error.message);
   }
 };

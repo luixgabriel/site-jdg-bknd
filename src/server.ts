@@ -14,7 +14,7 @@ const port = process.env.PORT || 3000
 app.use(express.json())
 console.log(__dirname)
 app.use(express.static(resolve(__dirname, './', 'uploads')))
-app.use('/', userRoutes)
+app.use('/users', userRoutes)
 app.use('/', postRoutes)
 app.use('/', voluntaryRoutes)
 
