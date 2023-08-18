@@ -1,15 +1,19 @@
 import { getUserPrisma } from "@/repositories/userRepositories/getUser/prisma-get-user"
 import { Request, Response } from "express"
 
-export const getUser = (req: Request, res: Response) => {
-  if(req.body.user.role !== "admin") {
+export const getUser = async (req: Request, res: Response) => {
+  if(!req.user){
+    return res.status(400).json({error: "Required user"})
+  }
+
+  if(req.user.role !== "admin") {
     return res.status(403).json({error: "Required user admin"})
   }
 
-  const { email } = req.body.email
+  const { email } = req.body
 
   try {
-    const user = getUserPrisma(email)
+    const user = await getUserPrisma(email)
     res.status(200).json(user)
   } catch (error: any) {
     res.status(500).json(error.message)

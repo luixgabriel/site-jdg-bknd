@@ -8,6 +8,8 @@ import {
 } from '@/controllers/userController/authenticationController'
 import { createUser } from '@/controllers/userController/createUser/createUser'
 import { login } from '@/controllers/userController/authenticationController/loginUser/loginUser'
+import { withAuth } from '@/middlewares/auth/withAuth'
+import { getUser } from '@/controllers/userController/getUser/getUser'
 const routes = Router()
 
 // routes.post('/save', async (req: Request, res: Response) => {
@@ -29,6 +31,13 @@ routes.post(
   '/login',
   validateAndTransformEmail,
   login
+)
+
+routes.get(
+  '/getuser',
+  validateAndTransformEmail,
+  withAuth,
+  getUser
 )
 
 routes.post(

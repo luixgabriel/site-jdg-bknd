@@ -14,10 +14,12 @@ declare global {
 }
 
 export const withAuth = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
-  const token = req.headers.authorization?.replace('Bearer ', '');
-  if(!token){
-    res.status(401).json({error: "Unauthorized: no token provided"})
-  }else{
+  try {
+    const token = req.headers.authorization?.replace('Bearer ', '');
+
+    if(!token){
+      return res.status(401).json({error: "Unauthorized: no token provided"})
+    }
 
     if (!process.env.JWT_TOKEN) {
       return res.status(401).json({error: 'JWT secret not configured'});
@@ -29,12 +31,18 @@ export const withAuth = async (req: Request, res: Response, next: NextFunction):
     if(!decodedToken){
       return res.status(401).json({error: "Unauthorized: token invalid"})
     }
+
     const user = await prisma.user.findUnique({where: {email: decodedToken.email}})
+
     if(!user){
       return res.status(404).json({error: "User dont match"})
     }
     
     req.user = user
     next();
+    
+  } catch (error) {
+    console.error("Error in withAuth middleware:", error);
+    return res.status(500).json({ error: "Internal server error" });
   }
 }
