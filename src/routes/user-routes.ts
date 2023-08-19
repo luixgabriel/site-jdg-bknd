@@ -6,10 +6,17 @@ import {
   sendAuthenticationCode,
   verifyAuthenticationCode,
 } from '@/controllers/userController/authenticationController'
+
 import { createUser } from '@/controllers/userController/createUser/createUser'
 import { login } from '@/controllers/userController/authenticationController/loginUser/loginUser'
 import { withAuth } from '@/middlewares/auth/withAuth'
 import { getUser } from '@/controllers/userController/getUser/getUser'
+import { getUsers } from '@/controllers/userController/getUsers/getUser'
+import { deleteUser } from '@/controllers/userController/deleteUser/deleteUser'
+import { updateUser } from '@/controllers/userController/updateUser/updateUser'
+import { requestPasswordReset } from '@/controllers/userController/useCases/passwordRecovery/requestPasswordReset'
+import { resetPassword } from '@/controllers/userController/useCases/passwordRecovery/resetPassword'
+
 const routes = Router()
 
 // routes.post('/save', async (req: Request, res: Response) => {
@@ -40,6 +47,12 @@ routes.get(
   getUser
 )
 
+routes.get(
+  '/getusers',
+  withAuth,
+  getUsers
+)
+
 routes.post(
   '/authentication/send-code',
   validateAndTransformEmail,
@@ -50,6 +63,28 @@ routes.post(
   '/authentication/verify-code',
   validateAndTransformEmail,
   verifyAuthenticationCode,
+)
+
+routes.post(
+  '/passwordrequest',
+  requestPasswordReset
+)
+
+routes.post(
+  '/passwordrecovery',
+  resetPassword
+)
+
+routes.put(
+  '/',
+  withAuth,
+  updateUser
+)
+
+routes.delete(
+  '/',
+  withAuth,
+  deleteUser
 )
 
 export default routes
