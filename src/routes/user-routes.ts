@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express'
 import { CreateUserController } from '@/controllers/userController/useCases/createUser/create-user'
 // import { PrismaCreateUserRepository } from '@/repositories/userRepositories/createUser/createUser/prisma-create-user'
-import { validateAndTransformEmail } from '@/middlewares/validatedEmail'
+import { validateAndTransformEmail } from '@/middlewares/validators/validatedEmail'
 import {
   sendAuthenticationCode,
   verifyAuthenticationCode,
