@@ -1,8 +1,16 @@
 import { Request, Response } from 'express';
 import { createUserPrisma } from '@/repositories/userRepositories/createUser/prisma-create-user';
+import { passwordValidator } from '@/middlewares/validators/passwordValidator';
 
 export const createUser = async (req: Request, res: Response) => {
   try {
+    
+    try {
+      passwordValidator.parse(req.body.password);
+    } catch (error: any) {
+      return res.status(400).json({ error: error.message });
+    }
+
     const newUser = await createUserPrisma(req.body)
 
     const newUserResponse = {

@@ -14,22 +14,27 @@ const userSchema = z.object({
 type userSchemaOutPut = z.infer<typeof userSchema>
 
 export const createUserPrisma = async (userData: userSchemaOutPut) => {
-  const { name, email, password, role } = userSchema.parse(userData);
+  try {
+    const { name, email, password, role } = userSchema.parse(userData);
 
-  if (role === 'admin') {
-    throw new Error('Unauthorized to create an admin');
+    if (role === 'admin') {
+      throw new Error('Unauthorized to create an admin');
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = await prisma.user.create({
+      data: {
+        name,
+        email,
+        password: hashedPassword,
+        role,
+      },
+    });
+
+    prisma.$disconnect();
+    return newUser;
+  } catch (error: any) {
+    throw new Error(error.message);
   }
-
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  const newUser = await prisma.user.create({
-    data: {
-      name,
-      email,
-      password: hashedPassword,
-      role,
-    },
-  });
-
-  return newUser;
 };

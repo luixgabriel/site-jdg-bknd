@@ -13,8 +13,10 @@ export const updatePasswordUserPrisma = async (user: User, password: string) => 
       },
     });
 
+    prisma.$disconnect();
     return updatedUser
   } catch (error: any) {
+    prisma.$disconnect();
     throw new Error(`Error updating user: ${error.message}`);
   }
 }

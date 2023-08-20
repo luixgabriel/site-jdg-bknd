@@ -13,9 +13,10 @@ export const updateAuthenticationCodePrisma = async (email: string, authenticati
         authenticationCodeCreatedAt: new Date(Date.now())
       },
     });
-
+    prisma.$disconnect();
     return updatedUser
   } catch (error: any) {
+    prisma.$disconnect();
     throw new Error(`Error updating user: ${error.message}`);
   }
 }

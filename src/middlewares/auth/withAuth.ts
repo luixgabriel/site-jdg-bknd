@@ -39,9 +39,11 @@ export const withAuth = async (req: Request, res: Response, next: NextFunction):
     }
     
     req.user = user
+    prisma.$disconnect()
     next();
     
   } catch (error) {
+    prisma.$disconnect()
     console.error("Error in withAuth middleware:", error);
     return res.status(500).json({ error: "Internal server error" });
   }

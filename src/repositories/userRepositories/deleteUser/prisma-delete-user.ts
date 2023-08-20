@@ -8,8 +8,10 @@ export const deleteUserPrisma = async (user: User) => {
         id: user.id,
       },
     });
+    prisma.$disconnect();
     return userDeleted
   } catch (error: any) {
+    prisma.$disconnect();
     throw new Error(`Error deleting user: ${error.message}`);
   }
 }

@@ -22,6 +22,7 @@ export const authenticateUser = async (email: string, password: string) => {
 
     const token = generateToken(email);
 
+    prisma.$disconnect()
     return {
       id: user.id,
       name: user.name,
@@ -31,6 +32,7 @@ export const authenticateUser = async (email: string, password: string) => {
       token,
     };
   } catch (error: any) {
+    prisma.$disconnect()
     throw new Error(error.message);
   }
 };
