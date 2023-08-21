@@ -1,6 +1,8 @@
 import { HttpRequest, HttpResponse, IController } from '@/interfaces/https'
 import { Voluntary } from '@prisma/client'
 import { IGetVoluntaryRepository } from './protocols'
+import { forbidden, ok, serverError } from '@/helpers/http-helpers'
+import { InvalidParamError } from '@/errors/invalid-param-error'
 
 export class GetVoluntaryController implements IController {
   constructor(
@@ -16,16 +18,13 @@ export class GetVoluntaryController implements IController {
       const voluntary = await this.getVoluntaryRepository.getVoluntary(
         httpRequest.params.id,
       )
-      if (!voluntary) throw new Error('Voluntary not found.')
-      return {
-        statusCode: 200,
-        body: voluntary,
+      if (!voluntary) {
+        return forbidden(new InvalidParamError('postID'))
       }
-    } catch (error) {
-      return {
-        statusCode: 500,
-        body: { msg: 'Voluntary not found' },
-      }
+      return ok(voluntary)
+    } catch (error: any) {
+      console.log(error)
+      return serverError(error)
     }
   }
 }

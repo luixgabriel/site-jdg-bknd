@@ -2,7 +2,7 @@ import { HttpRequest, HttpResponse, IController } from '@/interfaces/https'
 import { Post } from '@prisma/client'
 import { IGetPostRepository } from './protocols'
 import { InvalidParamError } from '@/errors/invalid-param-error'
-import { forbidden } from '@/helpers/http-helpers'
+import { forbidden, ok, serverError } from '@/helpers/http-helpers'
 
 export class GetPostController implements IController {
   constructor(private readonly getPostRepository: IGetPostRepository) {
@@ -15,15 +15,9 @@ export class GetPostController implements IController {
       if (!post) {
         return forbidden(new InvalidParamError('postID'))
       }
-      return {
-        statusCode: 200,
-        body: post,
-      }
-    } catch (error) {
-      return {
-        statusCode: 500,
-        body: error,
-      }
+      return ok(post)
+    } catch (error: any) {
+      return serverError(error)
     }
   }
 }

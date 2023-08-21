@@ -1,6 +1,8 @@
 import { HttpRequest, HttpResponse, IController } from '@/interfaces/https'
 import { IEditVoluntaryParams, IEditVoluntaryRepository } from './protocols'
 import { Voluntary } from '@prisma/client'
+import { forbidden, ok, serverError } from '@/helpers/http-helpers'
+import { InvalidParamError } from '@/errors/invalid-param-error'
 
 export class EditVoluntaryController implements IController {
   constructor(
@@ -15,30 +17,17 @@ export class EditVoluntaryController implements IController {
     const body = httpRequest.body
     const id = httpRequest.params.id
     if (!id) {
-      return {
-        statusCode: 400,
-        body: {
-          msg: 'Missing ID',
-        },
-      }
+      return forbidden(new InvalidParamError('voluntary ID'))
     }
     try {
       const updatedVoluntary = await this.editVoluntaryRepository.editVoluntary(
         id,
         body,
       )
-      return {
-        statusCode: 200,
-        body: updatedVoluntary,
-      }
-    } catch (error) {
+      return ok(updatedVoluntary)
+    } catch (error: any) {
       console.log(error)
-      return {
-        statusCode: 500,
-        body: {
-          msg: error,
-        },
-      }
+      return serverError(error)
     }
   }
 }
