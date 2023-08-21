@@ -1,8 +1,9 @@
 import express from 'express'
 import 'module-alias/register'
-import userRoutes from '../src/routes/user-routes'
-import postRoutes from '../src/routes/post-routes'
-import voluntaryRoutes from '../src/routes/voluntary-routes'
+import userRoutes from '@/routes/user-routes'
+import postRoutes from '@/routes/post-routes'
+import voluntaryRoutes from '@/routes/voluntary-routes'
+import jobRoutes from '@/routes/job-routes'
 import { resolve } from 'path'
 import dotenv from 'dotenv'
 
@@ -16,6 +17,7 @@ app.use(express.static(resolve(__dirname, './', 'uploads')))
 app.use('/users', userRoutes)
 app.use('/', postRoutes)
 app.use('/', voluntaryRoutes)
+app.use('/', jobRoutes)
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`)

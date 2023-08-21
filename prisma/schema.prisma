@@ -48,7 +48,7 @@ model JobOpportunity {
   id          String      @id @default(uuid())
   title       String
   description String
-  status      String
+  status      jobStatus   @default(OPENED)
   stack       String[]
   candidateId Candidate[]
 }
@@ -61,9 +61,14 @@ model Voluntary {
 }
 
 model Client {
-  id       String @id @default(uuid())
-  name     String
-  email    String @unique
-  logo     String
-  document String
+  id    String @id @default(uuid())
+  name  String
+  email String @unique
+  logo  String
+}
+
+enum jobStatus {
+  OPENED
+  RECRUITING
+  CLOSED
 }

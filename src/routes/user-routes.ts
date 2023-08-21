@@ -28,30 +28,13 @@ const routes = Router()
 //   res.status(statusCode).json(body)
 // })
 
-routes.post(
-  '/create',
-  validateAndTransformEmail,
-  createUser
-)
+routes.post('/create', validateAndTransformEmail, createUser)
 
-routes.post(
-  '/login',
-  validateAndTransformEmail,
-  login
-)
+routes.post('/login', validateAndTransformEmail, login)
 
-routes.get(
-  '/getuser',
-  validateAndTransformEmail,
-  withAuth,
-  getUser
-)
+routes.get('/getuser', validateAndTransformEmail, withAuth, getUser)
 
-routes.get(
-  '/getusers',
-  withAuth,
-  getUsers
-)
+routes.get('/getusers', withAuth, getUsers)
 
 routes.post(
   '/authentication/send-code',
@@ -65,26 +48,12 @@ routes.post(
   verifyAuthenticationCode,
 )
 
-routes.post(
-  '/passwordrequest',
-  requestPasswordReset
-)
+routes.post('/passwordrequest', requestPasswordReset)
 
-routes.post(
-  '/passwordrecovery',
-  resetPassword
-)
+routes.post('/passwordrecovery', resetPassword)
 
-routes.put(
-  '/',
-  withAuth,
-  updateUser
-)
+routes.put('/', withAuth, updateUser)
 
-routes.delete(
-  '/',
-  withAuth,
-  deleteUser
-)
+routes.delete('/', withAuth, deleteUser)
 
 export default routes

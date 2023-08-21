@@ -1,9 +1,10 @@
 import { HttpRequest, HttpResponse, IController } from '@/interfaces/https'
 import { ICreateJobParams, ICreateJobRepository } from './protocols'
 import { JobOpportunity } from '@prisma/client'
-import { serverError } from '@/helpers/http-helpers'
+import { ok, serverError } from '@/helpers/http-helpers'
+import { z } from 'zod'
 
-export class CreteJobController implements IController {
+export class CreateJobController implements IController {
   constructor(private readonly createJobRepository: ICreateJobRepository) {
     this.createJobRepository = createJobRepository
   }
@@ -12,13 +13,15 @@ export class CreteJobController implements IController {
     httpRequest: HttpRequest<ICreateJobParams>,
   ): Promise<HttpResponse<JobOpportunity>> {
     try {
+      const JobOpportunity = z.object({
+        title: z.string(),
+        description: z.string(),
+        stack: z.array(z.string()),
+      })
       const jobOpportunity = await this.createJobRepository.createJob(
-        httpRequest.body,
+        JobOpportunity.parse(httpRequest.body),
       )
-      return {
-        statusCode: 200,
-        body: jobOpportunity,
-      }
+      return ok(jobOpportunity)
     } catch (error: any) {
       console.log(error)
       return serverError(error)
