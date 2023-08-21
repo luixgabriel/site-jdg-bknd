@@ -2,7 +2,7 @@ import { IController, HttpRequest, HttpResponse } from '@/interfaces/https'
 import { Post } from '@prisma/client'
 import { IEditPostParams, IEditPostRepository } from './protocols'
 import generateImage from '@/utils/generateImage'
-import { ok } from '@/helpers/http-helpers'
+import { ok, serverError } from '@/helpers/http-helpers'
 
 export class EditPostController implements IController {
   constructor(private readonly editPostRepository: IEditPostRepository) {
@@ -19,14 +19,8 @@ export class EditPostController implements IController {
     try {
       const updatedPost = await this.editPostRepository.editPost(id, body)
       return ok(updatedPost)
-    } catch (error) {
-      console.log(error)
-      return {
-        statusCode: 500,
-        body: {
-          msg: error,
-        },
-      }
+    } catch (error: any) {
+      return serverError(error.stack)
     }
   }
 }

@@ -2,7 +2,7 @@ import { IController, HttpRequest, HttpResponse } from '@/interfaces/https'
 import { ICreatePostParams, ICreatePostRepository } from './protocols'
 import { Post } from '@prisma/client'
 import generateImage from '@/utils/generateImage'
-import { ok } from '@/helpers/http-helpers'
+import { ok, serverError } from '@/helpers/http-helpers'
 
 export class CreatePostController implements IController {
   constructor(private readonly createPostRepository: ICreatePostRepository) {
@@ -18,12 +18,8 @@ export class CreatePostController implements IController {
     try {
       const post = await this.createPostRepository.createPost(body)
       return ok(post)
-    } catch (error) {
-      console.log(error)
-      return {
-        statusCode: 400,
-        body: error,
-      }
+    } catch (error: any) {
+      return serverError(error)
     }
   }
 }

@@ -1,6 +1,7 @@
 import { HttpRequest, HttpResponse, IController } from '@/interfaces/https'
 import { ICreateJobParams, ICreateJobRepository } from './protocols'
 import { JobOpportunity } from '@prisma/client'
+import { serverError } from '@/helpers/http-helpers'
 
 export class CreteJobController implements IController {
   constructor(private readonly createJobRepository: ICreateJobRepository) {
@@ -18,14 +19,9 @@ export class CreteJobController implements IController {
         statusCode: 200,
         body: jobOpportunity,
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log(error)
-      return {
-        statusCode: 500,
-        body: {
-          msg: 'Error',
-        },
-      }
+      return serverError(error)
     }
   }
 }
