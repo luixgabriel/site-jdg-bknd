@@ -1,22 +1,11 @@
-const nodemailer = require('nodemailer')
-import dotenv from 'dotenv';
-dotenv.config();
+import { PrismaClient } from '@prisma/client';
+import { transporter } from './transporterEmail';
 
-const gmail = process.env.GMAIL; // company gmail
-const password = process.env.PASSWORD; // company gmail password
-
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: gmail,
-    pass: password
-  },
-  debug: true
-});
+const prisma = new PrismaClient();
 
 export async function sendConfirmationEmail(email: string, authenticationCode: number) {
   const mailOptions = {
-    from: gmail,
+    from: process.env.GMAIL,
     to: email,
     subject: 'Confirmação de E-mail',
     text: `Seu código de autenticação é: ${authenticationCode}`
@@ -24,8 +13,12 @@ export async function sendConfirmationEmail(email: string, authenticationCode: n
 
   try {
     const info = await transporter.sendMail(mailOptions);
-    console.log('E-mail enviado:', info.response);
+    const user = await prisma.user.findUnique({where: {email: email}})
+    if (!user) {
+      throw new Error('Email does not exist');
+    }
+    console.log('Email sent:', info.response);
   } catch (error: any) {
-    console.error('Erro ao enviar e-mail:', error.message);
+    throw new Error(error.message)
   }
 }

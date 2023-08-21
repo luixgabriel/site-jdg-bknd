@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import prisma from '@/lib/prisma'
+import { isWithinTimeLimit } from '@/utils/authUtils/isWithinTimeLimit'
 
 export const verifyAuthenticationCode = async (req: Request, res: Response) => {
   const { authenticationCode, email } = req.body
@@ -16,6 +17,14 @@ export const verifyAuthenticationCode = async (req: Request, res: Response) => {
 
     if (user.authenticated) {
       return res.status(403).json({ message: 'User already authenticated' })
+    }
+
+    if(!user.authenticationCodeCreatedAt || !user.authenticationCode){
+      return res.status(400).json({ message: 'Authentication code does not exist!'})
+    }
+
+    if(!isWithinTimeLimit(user.authenticationCodeCreatedAt, 5)){
+      return res.status(400).json({ message: 'Authentication code expired'})
     }
 
     if (authenticationCode === user.authenticationCode) {
