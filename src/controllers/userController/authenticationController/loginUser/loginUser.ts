@@ -1,26 +1,29 @@
-import { Request, Response } from 'express';
-import { authenticateUser } from '@/repositories/userRepositories/loginUser/prisma-login-user';
+import { Request, Response } from 'express'
+import { authenticateUser } from '@/repositories/userRepositories/loginUser/prisma-login-user'
 
 interface LoginResponse {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
-  stack: string[];
-  token: string;
+  id: string
+  name: string
+  email: string
+  role: string
+  stack: string[]
+  token: string
 }
 
 interface ErrorResponse {
-  error: string;
+  error: string
 }
 
-export const login = async (req: Request, res: Response<LoginResponse | ErrorResponse>) => {
-  const {email, password} = req.body
+export const login = async (
+  req: Request,
+  res: Response<LoginResponse | ErrorResponse>,
+) => {
+  const { email, password } = req.body
 
   try {
     const userResponse = await authenticateUser(email, password)
-    return res.status(200).json(userResponse);
+    return res.status(200).json(userResponse)
   } catch (error: any) {
-    return res.status(500).json({error: error.message});
+    return res.status(500).json({ error: error.message })
   }
-};
+}
