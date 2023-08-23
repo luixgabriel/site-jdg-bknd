@@ -1,5 +1,5 @@
-import prisma from "@/lib/prisma";
-import { User } from "@prisma/client";
+import prisma from '@/lib/prisma'
+import { User } from '@prisma/client'
 
 export const deleteUserPrisma = async (user: User) => {
   try {
@@ -7,11 +7,11 @@ export const deleteUserPrisma = async (user: User) => {
       where: {
         id: user.id,
       },
-    });
-    prisma.$disconnect();
+    })
+    prisma.$disconnect()
     return userDeleted
   } catch (error: any) {
-    prisma.$disconnect();
-    throw new Error(`Error deleting user: ${error.message}`);
+    prisma.$disconnect()
+    throw new Error(`Error deleting user: ${error.message}`)
   }
 }

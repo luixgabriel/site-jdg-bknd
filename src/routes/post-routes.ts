@@ -24,7 +24,7 @@ routes.get('/post', async (req: Request, res: Response) => {
   const getAllPostController = new GetAllPostsController(
     prismaGetAllPostsRepository,
   )
-  const { body, statusCode } = await getAllPostController.handle()
+  const { body, statusCode } = await getAllPostController.handle(req)
   res.status(statusCode).json(body)
 })
 
