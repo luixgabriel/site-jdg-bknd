@@ -17,6 +17,7 @@ export class CreateJobController implements IController {
         title: z.string(),
         description: z.string(),
         stack: z.array(z.string()),
+        status: z.string().optional(),
       })
       const jobOpportunity = await this.createJobRepository.createJob(
         JobOpportunity.parse(httpRequest.body),
