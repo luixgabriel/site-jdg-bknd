@@ -4,9 +4,8 @@ export interface ICreateClientParams {
   name: string
   email: string
   logo: string
-  document: string
 }
 
-export interface ICreateclientRepository {
-  createPost(params?: ICreateClientParams): Promise<Client>
+export interface ICreateClientRepository {
+  createClient(params?: ICreateClientParams): Promise<Client>
 }

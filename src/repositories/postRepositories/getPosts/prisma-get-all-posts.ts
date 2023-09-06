@@ -11,7 +11,7 @@ export class PrismaGetAllPostsRepository implements IGetAllPostsRepository {
       skip: navigation.offset,
       take: navigation.limit,
       orderBy: {
-        createdAt: 'asc',
+        createdAt: 'desc',
       },
       include: {
         author: true,
