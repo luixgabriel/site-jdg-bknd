@@ -2,7 +2,8 @@ import { IController, HttpRequest, HttpResponse } from '@/interfaces/https'
 import { Post } from '@prisma/client'
 import { IEditPostParams, IEditPostRepository } from './protocols'
 import generateImage from '@/utils/generateImage'
-import { ok, serverError } from '@/helpers/http-helpers'
+import { notFound, ok, serverError } from '@/helpers/http-helpers'
+import { NotFoundError } from '@/errors/not-found-error'
 
 export class EditPostController implements IController {
   constructor(private readonly editPostRepository: IEditPostRepository) {
@@ -17,6 +18,11 @@ export class EditPostController implements IController {
     if (httpRequest.file)
       body = generateImage(httpRequest.file.filename, httpRequest.body)
     try {
+      const postExists = await this.editPostRepository.exists(id)
+
+      if (!postExists) {
+        return notFound(new NotFoundError('Post not Found.'))
+      }
       const updatedPost = await this.editPostRepository.editPost(id, body)
       return ok(updatedPost)
     } catch (error: any) {

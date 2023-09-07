@@ -7,5 +7,6 @@ export interface IEditPostParams {
 }
 
 export interface IEditPostRepository {
+  exists(id: string): Promise<boolean>
   editPost(id: string, params?: IEditPostParams): Promise<Post>
 }
