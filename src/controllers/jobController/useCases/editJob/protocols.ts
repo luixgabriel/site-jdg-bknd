@@ -7,5 +7,6 @@ export interface IEditJobParams {
 }
 
 export interface IEditJobRepository {
+  exists(id: string): Promise<boolean>
   editJob(id: string, params?: IEditJobParams): Promise<JobOpportunity>
 }
