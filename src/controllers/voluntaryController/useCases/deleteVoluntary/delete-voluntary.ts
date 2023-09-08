@@ -1,6 +1,6 @@
 import { HttpRequest, HttpResponse, IController } from '@/interfaces/https'
 import { IDeleteVoluntaryRepository } from './protocols'
-import { Post } from '@prisma/client'
+import { Post, Voluntary } from '@prisma/client'
 import { ok, serverError } from '@/helpers/http-helpers'
 
 export class DeleteVoluntaryController implements IController {
@@ -10,7 +10,9 @@ export class DeleteVoluntaryController implements IController {
     deleteVoluntaryRepository = this.deleteVoluntaryRepository
   }
 
-  async handle(httpRequest: HttpRequest<any>): Promise<HttpResponse<Post>> {
+  async handle(
+    httpRequest: HttpRequest<any>,
+  ): Promise<HttpResponse<Voluntary>> {
     try {
       const deletedVoluntary =
         await this.deleteVoluntaryRepository.deleteVoluntary(

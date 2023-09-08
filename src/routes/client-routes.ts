@@ -4,29 +4,27 @@ import multerConfig from '@/lib/multer'
 
 // Repositories
 import { Router, Request, Response } from 'express'
-import { PrismaGetAllPostsRepository } from '@/repositories/postRepositories/getPosts/prisma-get-all-posts'
-import { GetAllPostsController } from '@/controllers/postController/useCases/getPosts/get-all-posts'
-import { PrismaDeletePostRepository } from '@/repositories/postRepositories/deletePost/prisma-delete-post'
-import { DeletePostController } from '@/controllers/postController/useCases/deletePost/delete-post'
-import { PrismaGetPostRepository } from '@/repositories/postRepositories/getPost/prisma-get-post'
-import { GetPostController } from '@/controllers/postController/useCases/getPost/get-post'
 import { PrismaCreateClientRepository } from '@/repositories/clientRepositories/createClient/prisma-create-client'
 import { CreateClientController } from '@/controllers/clientController/useCases/createClient/create-client'
 import { PrismaEditClientRepository } from '@/repositories/clientRepositories/editClient/prisma-edit-client'
 import { EditClientController } from '@/controllers/clientController/useCases/editClient/edit-client'
 import { GetClientController } from '@/controllers/clientController/useCases/getClient/get-client'
 import { PrismaGetClientRepository } from '@/repositories/clientRepositories/getClient/prisma-get-client'
+import { PrismaDeleteClientRepository } from '@/repositories/clientRepositories/deleteClient/prisma-delete-client'
+import { DeleteClientController } from '@/controllers/clientController/useCases/deleteClient/delete-client'
+import { PrismaGetAllClientsRepository } from '@/repositories/clientRepositories/getClients/prisma-get-all-clients'
+import { GetAllClientsController } from '@/controllers/clientController/useCases/getClients/get-client'
 
 const routes = Router()
 const upload = multer(multerConfig)
 
 // GET ALL CLIENTS
 routes.get('/client', async (req: Request, res: Response) => {
-  const prismaGetAllPostsRepository = new PrismaGetAllPostsRepository()
-  const getAllPostController = new GetAllPostsController(
-    prismaGetAllPostsRepository,
+  const prismaGetAllClientsRepository = new PrismaGetAllClientsRepository()
+  const getAllClientsController = new GetAllClientsController(
+    prismaGetAllClientsRepository,
   )
-  const { body, statusCode } = await getAllPostController.handle(req)
+  const { body, statusCode } = await getAllClientsController.handle()
   res.status(statusCode).json(body)
 })
 
@@ -73,12 +71,12 @@ routes.patch(
 )
 
 // DELETE CLIENT
-routes.delete('/Client/:id', async (req: Request, res: Response) => {
-  const prismaDeletePostsRepository = new PrismaDeletePostRepository()
-  const deletePostController = new DeletePostController(
-    prismaDeletePostsRepository,
+routes.delete('/client/:id', async (req: Request, res: Response) => {
+  const prismaDeleteClientRepository = new PrismaDeleteClientRepository()
+  const deleteClientController = new DeleteClientController(
+    prismaDeleteClientRepository,
   )
-  const { body, statusCode } = await deletePostController.handle(req)
+  const { body, statusCode } = await deleteClientController.handle(req)
   res.status(statusCode).json(body)
 })
 
