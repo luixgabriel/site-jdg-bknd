@@ -14,6 +14,8 @@ import { PrismaCreateClientRepository } from '@/repositories/clientRepositories/
 import { CreateClientController } from '@/controllers/clientController/useCases/createClient/create-client'
 import { PrismaEditClientRepository } from '@/repositories/clientRepositories/editClient/prisma-edit-client'
 import { EditClientController } from '@/controllers/clientController/useCases/editClient/edit-client'
+import { GetClientController } from '@/controllers/clientController/useCases/getClient/get-client'
+import { PrismaGetClientRepository } from '@/repositories/clientRepositories/getClient/prisma-get-client'
 
 const routes = Router()
 const upload = multer(multerConfig)
@@ -29,10 +31,10 @@ routes.get('/client', async (req: Request, res: Response) => {
 })
 
 // GET CLIENT BY ID
-routes.get('/post/:id', async (req: Request, res: Response) => {
-  const prismaGetPostRepository = new PrismaGetPostRepository()
-  const getPostController = new GetPostController(prismaGetPostRepository)
-  const { body, statusCode } = await getPostController.handle(req)
+routes.get('/client/:id', async (req: Request, res: Response) => {
+  const prismaGetClientRepository = new PrismaGetClientRepository()
+  const getClientController = new GetClientController(prismaGetClientRepository)
+  const { body, statusCode } = await getClientController.handle(req)
   res.status(statusCode).json(body)
 })
 
