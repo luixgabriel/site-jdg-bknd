@@ -19,6 +19,7 @@ export class CreatePostController implements IController {
       const post = await this.createPostRepository.createPost(body)
       return ok(post)
     } catch (error: any) {
+      console.log(error)
       return serverError(error)
     }
   }
