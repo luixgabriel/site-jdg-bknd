@@ -9,7 +9,6 @@ export class PrismaCreateClientRepository implements ICreateClientRepository {
     const client = await prisma.client.create({
       data: params,
     })
-
     return client
   }
 }

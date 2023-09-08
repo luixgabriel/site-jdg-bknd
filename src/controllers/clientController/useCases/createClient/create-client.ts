@@ -3,6 +3,7 @@ import { ICreateClientParams, ICreateClientRepository } from './protocols'
 import { Client } from '@prisma/client'
 import { z } from 'zod'
 import { ok, serverError } from '@/helpers/http-helpers'
+import generateImage from '@/utils/generateImage'
 
 export class CreateClientController implements IController {
   constructor(
@@ -14,16 +15,11 @@ export class CreateClientController implements IController {
   async handle(
     httpRequest: HttpRequest<ICreateClientParams>,
   ): Promise<HttpResponse<Client | string>> {
+    let body = httpRequest.body
+    if (httpRequest.file)
+      body = generateImage(httpRequest.file.filename, httpRequest.body)
     try {
-      const Client = z.object({
-        name: z.string(),
-        email: z.string(),
-        logo: z.string(),
-      })
-
-      const client = await this.createClientRepository.createClient(
-        Client.parse(httpRequest.body),
-      )
+      const client = await this.createClientRepository.createClient(body)
       return ok(client)
     } catch (error: any) {
       console.log(error)

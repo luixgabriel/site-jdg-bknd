@@ -3,7 +3,7 @@ import { Client } from '@prisma/client'
 export interface ICreateClientParams {
   name: string
   email: string
-  logo: string
+  image: string
 }
 
 export interface ICreateClientRepository {
