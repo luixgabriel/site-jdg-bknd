@@ -17,6 +17,7 @@ import { createUser } from '@/controllers/userController/useCases/createUser/cre
 import { deleteUser } from '@/controllers/userController/useCases/deleteUser/deleteUser'
 import { getUser } from '@/controllers/userController/useCases/getUser/getUser'
 import { getUsers } from '@/controllers/userController/useCases/getUsers/getUser'
+import { createUserAdmin } from '@/controllers/userController/useCases/createUserAdmin/createUserAdmin'
 
 const routes = Router()
 
@@ -33,6 +34,13 @@ routes.post(
   '/create',
   validateAndTransformEmail,
   createUser
+)
+
+routes.post(
+  '/admin/create', 
+  validateAndTransformEmail,
+  withAuth,
+  createUserAdmin
 )
 
 routes.post(
