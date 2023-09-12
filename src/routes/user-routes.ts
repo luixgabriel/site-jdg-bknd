@@ -1,5 +1,4 @@
-import { Router, Request, Response } from 'express'
-import { CreateUserController } from '@/controllers/userController/useCases/createUser/create-user'
+import { Router } from 'express'
 // import { PrismaCreateUserRepository } from '@/repositories/userRepositories/createUser/createUser/prisma-create-user'
 import { validateAndTransformEmail } from '@/middlewares/validators/validatedEmail'
 import {
@@ -7,15 +6,17 @@ import {
   verifyAuthenticationCode,
 } from '@/controllers/userController/authenticationController'
 
-import { createUser } from '@/controllers/userController/createUser/createUser'
-import { login } from '@/controllers/userController/authenticationController/loginUser/loginUser'
+
+import { login } from '@/controllers/userController/authenticationController/authenticationUser/loginUser/loginUser'
 import { withAuth } from '@/middlewares/auth/withAuth'
-import { getUser } from '@/controllers/userController/getUser/getUser'
-import { getUsers } from '@/controllers/userController/getUsers/getUser'
-import { deleteUser } from '@/controllers/userController/deleteUser/deleteUser'
-import { updateUser } from '@/controllers/userController/updateUser/updateUser'
+
+import { updateUser } from '@/controllers/userController/useCases/updateUser/updateUser'
 import { requestPasswordReset } from '@/controllers/userController/useCases/passwordRecovery/requestPasswordReset'
 import { resetPassword } from '@/controllers/userController/useCases/passwordRecovery/resetPassword'
+import { createUser } from '@/controllers/userController/useCases/createUser/createUser'
+import { deleteUser } from '@/controllers/userController/useCases/deleteUser/deleteUser'
+import { getUser } from '@/controllers/userController/useCases/getUser/getUser'
+import { getUsers } from '@/controllers/userController/useCases/getUsers/getUser'
 
 const routes = Router()
 

@@ -3,6 +3,7 @@ import { IDeleteVoluntaryRepository } from './protocols'
 import { Post } from '@prisma/client'
 
 export class DeleteVoluntaryController implements IController {
+
   constructor(
     private readonly deleteVoluntaryRepository: IDeleteVoluntaryRepository,
   ) {
