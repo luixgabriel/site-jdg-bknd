@@ -14,6 +14,7 @@ import { PrismaDeletePostRepository } from '@/repositories/postRepositories/dele
 import { DeletePostController } from '@/controllers/postController/useCases/deletePost/delete-post'
 import { PrismaGetPostRepository } from '@/repositories/postRepositories/getPost/prisma-get-post'
 import { GetPostController } from '@/controllers/postController/useCases/getPost/get-post'
+import { withAuth } from '@/middlewares/auth/withAuth'
 
 const routes = Router()
 const upload = multer(multerConfig)
@@ -39,6 +40,7 @@ routes.get('/post/:id', async (req: Request, res: Response) => {
 // CREATE POST
 routes.post(
   '/post',
+  withAuth,
   upload.single('IMAGE'),
   async (req: Request, res: Response) => {
     console.log(req.file)
