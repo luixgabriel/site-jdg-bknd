@@ -34,14 +34,15 @@ model Post {
 }
 
 model Candidate {
-  id        String           @id @default(uuid())
-  name      String
-  email     String           @unique
-  telephone String
-  cv        String
-  github    String
-  linkedin  String
-  job_id    JobOpportunity[]
+  id               String           @id @default(uuid())
+  name             String
+  email            String           @unique
+  telephone        String
+  cv               String
+  github           String
+  linkedin         String
+  applications     Int              @default(1)
+  jobOpportunities JobOpportunity[]
 }
 
 model JobOpportunity {
@@ -50,7 +51,7 @@ model JobOpportunity {
   description String
   status      jobStatus   @default(OPENED)
   stack       String[]
-  candidateId Candidate[]
+  candidates  Candidate[]
 }
 
 model Voluntary {

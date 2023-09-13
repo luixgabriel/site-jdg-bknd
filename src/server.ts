@@ -5,6 +5,7 @@ import postRoutes from '@/routes/post-routes'
 import voluntaryRoutes from '@/routes/voluntary-routes'
 import jobRoutes from '@/routes/job-routes'
 import clientRoutes from '@/routes/client-routes'
+import candidateRoutes from '@/routes/candidate-routes'
 import { resolve } from 'path'
 import dotenv from 'dotenv'
 
@@ -20,6 +21,7 @@ app.use('/', postRoutes)
 app.use('/', voluntaryRoutes)
 app.use('/', jobRoutes)
 app.use('/', clientRoutes)
+app.use('/', candidateRoutes)
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`)
