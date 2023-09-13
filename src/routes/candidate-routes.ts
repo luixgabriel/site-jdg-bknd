@@ -44,7 +44,9 @@ routes.post(
   '/candidate',
   upload.single('CV'),
   async (req: Request, res: Response) => {
-    console.log(req.file)
+    if (req.file?.mimetype !== 'application/pdf') {
+      return res.status(404).json({ msg: 'The format of the CV must be PDF.' })
+    }
     const prismaCreateCandidateRepository =
       new PrismaCreateCandidateRepository()
     const createCandidateController = new CreateCandidateController(
