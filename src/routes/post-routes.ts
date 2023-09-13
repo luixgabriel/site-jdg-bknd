@@ -7,13 +7,14 @@ import { Router, Request, Response } from 'express'
 import { PrismaCreatePostRepository } from '@/repositories/postRepositories/createPost/prisma-create-post'
 import { CreatePostController } from '@/controllers/postController/useCases/createPost/create-post'
 import { PrismaGetAllPostsRepository } from '@/repositories/postRepositories/getPosts/prisma-get-all-posts'
-import { GetAllPostsController } from '@/controllers/postController/useCases/getPosts/getAll-posts'
+import { GetAllPostsController } from '@/controllers/postController/useCases/getPosts/get-all-posts'
 import { PrismaEditPostRepository } from '@/repositories/postRepositories/editPost/prisma-edit-post'
 import { EditPostController } from '@/controllers/postController/useCases/editPost/edit-post'
 import { PrismaDeletePostRepository } from '@/repositories/postRepositories/deletePost/prisma-delete-post'
 import { DeletePostController } from '@/controllers/postController/useCases/deletePost/delete-post'
 import { PrismaGetPostRepository } from '@/repositories/postRepositories/getPost/prisma-get-post'
 import { GetPostController } from '@/controllers/postController/useCases/getPost/get-post'
+import { withAuth } from '@/middlewares/auth/withAuth'
 
 const routes = Router()
 const upload = multer(multerConfig)
@@ -24,7 +25,7 @@ routes.get('/post', async (req: Request, res: Response) => {
   const getAllPostController = new GetAllPostsController(
     prismaGetAllPostsRepository,
   )
-  const { body, statusCode } = await getAllPostController.handle()
+  const { body, statusCode } = await getAllPostController.handle(req)
   res.status(statusCode).json(body)
 })
 
@@ -39,6 +40,7 @@ routes.get('/post/:id', async (req: Request, res: Response) => {
 // CREATE POST
 routes.post(
   '/post',
+  withAuth,
   upload.single('IMAGE'),
   async (req: Request, res: Response) => {
     console.log(req.file)

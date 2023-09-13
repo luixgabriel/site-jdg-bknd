@@ -7,5 +7,6 @@ export interface IEditVoluntaryParams {
 }
 
 export interface IEditVoluntaryRepository {
+  exists(id: string): Promise<boolean>
   editVoluntary(id: string, params?: IEditVoluntaryParams): Promise<Voluntary>
 }

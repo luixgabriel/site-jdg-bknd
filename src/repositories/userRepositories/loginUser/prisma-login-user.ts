@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient()
 
 export const findUser = async (email: string) => {
   try {
@@ -12,6 +12,6 @@ export const findUser = async (email: string) => {
     return user
   } catch (error: any) {
     prisma.$disconnect()
-    throw new Error(error.message);
+    throw new Error(error.message)
   }
-};
+}

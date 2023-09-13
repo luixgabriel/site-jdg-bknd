@@ -1,6 +1,4 @@
-import { IEditPostParams } from '@/controllers/postController/useCases/editPost/protocols'
-
-const generateImage = (filename: string, body?: IEditPostParams): any => {
+const generateImage = (filename: string, body?: any): any => {
   const url = 'http://localhost:3000/' + filename
   if (body) {
     body = { ...body, image: url }

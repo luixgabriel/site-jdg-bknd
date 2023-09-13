@@ -34,24 +34,24 @@ model Post {
 }
 
 model Candidate {
-  id        String           @id @default(uuid())
-  name      String
-  email     String           @unique
-  telephone String
-  cv        String
-  github    String
-  linkedin  String
-  stack     String[]
-  job_id    JobOpportunity[]
+  id               String           @id @default(uuid())
+  name             String
+  email            String           @unique
+  telephone        String
+  cv               String
+  github           String
+  linkedin         String
+  applications     Int              @default(1)
+  jobOpportunities JobOpportunity[]
 }
 
 model JobOpportunity {
   id          String      @id @default(uuid())
   title       String
   description String
-  status      String
+  status      jobStatus   @default(OPENED)
   stack       String[]
-  candidateId Candidate[]
+  candidates  Candidate[]
 }
 
 model Voluntary {
@@ -62,9 +62,14 @@ model Voluntary {
 }
 
 model Client {
-  id       String @id @default(uuid())
-  name     String
-  email    String @unique
-  logo     String
-  document String
+  id    String @id @default(uuid())
+  name  String
+  email String @unique
+  image String
+}
+
+enum jobStatus {
+  OPENED
+  RECRUITING
+  CLOSED
 }

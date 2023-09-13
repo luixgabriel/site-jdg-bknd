@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/server.ts",
-    "test": "jest --watch"
+    "production": "node dist/src/server.js",
+    "test": "jest --watch",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -50,5 +52,6 @@
   },
   "_moduleAliases": {
     "@": "src"
+    
   }
 }

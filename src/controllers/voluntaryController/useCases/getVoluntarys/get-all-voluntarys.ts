@@ -1,6 +1,7 @@
-import { HttpRequest, HttpResponse, IController } from '@/interfaces/https'
+import { HttpResponse, IController } from '@/interfaces/https'
 import { Voluntary } from '@prisma/client'
 import { IGetAllVoluntarysRepository } from './protocols'
+import { ok, serverError } from '@/helpers/http-helpers'
 
 export class GetAllVoluntarysController implements IController {
   constructor(
@@ -13,17 +14,9 @@ export class GetAllVoluntarysController implements IController {
     try {
       const voluntarys =
         await this.getAllVoluntarysRepository.getAllVoluntarys()
-      return {
-        statusCode: 200,
-        body: voluntarys,
-      }
-    } catch (error) {
-      return {
-        statusCode: 500,
-        body: {
-          msg: 'Internal server error.',
-        },
-      }
+      return ok(voluntarys)
+    } catch (error: any) {
+      return serverError(error)
     }
   }
 }

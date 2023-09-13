@@ -2,6 +2,7 @@ import { IController, HttpRequest, HttpResponse } from '@/interfaces/https'
 import { ICreateVoluntaryParams, ICreateVoluntaryRepository } from './protocols'
 import { z } from 'zod'
 import { Voluntary } from '@prisma/client'
+import { ok, serverError } from '@/helpers/http-helpers'
 
 export class CreateVoluntaryController implements IController {
   constructor(
@@ -20,19 +21,13 @@ export class CreateVoluntaryController implements IController {
         stack: z.array(z.string()),
       })
 
-      const user = await this.createVoluntaryRepository.createVoluntary(
+      const voluntary = await this.createVoluntaryRepository.createVoluntary(
         Voluntary.parse(httpRequest.body),
       )
-      return {
-        statusCode: 200,
-        body: user,
-      }
-    } catch (error) {
+      return ok(voluntary)
+    } catch (error: any) {
       console.log(error)
-      return {
-        statusCode: 400,
-        body: error,
-      }
+      return serverError(error)
     }
   }
 }
