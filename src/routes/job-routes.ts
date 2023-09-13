@@ -5,6 +5,10 @@ import { PrismaEditJobRepository } from '@/repositories/jobRepositories/editJob/
 import { EditJobController } from '@/controllers/jobController/useCases/editJob/edit-job'
 import { PrismaGetAllJobsRepository } from '@/repositories/jobRepositories/getJobs/prisma-get-all-jobs'
 import { GetAllJobsController } from '@/controllers/jobController/useCases/getJobs/get-all-jobs'
+import { PrismaGetJobRepository } from '@/repositories/jobRepositories/getJob/prisma-get-job'
+import { GetJobController } from '@/controllers/jobController/useCases/getJob/get-job'
+import { DeleteJobController } from '@/controllers/jobController/useCases/deleteJob/delete-job'
+import { PrismaDeleteJobtRepository } from '@/repositories/jobRepositories/deleteJob/prisma-delete-job'
 
 const routes = Router()
 
@@ -14,6 +18,13 @@ routes.get('/job-opportunities', async (req: Request, res: Response) => {
     prismaGetAllJobsRepository,
   )
   const { body, statusCode } = await getAllVoluntaryController.handle()
+  res.status(statusCode).json(body)
+})
+
+routes.get('/job-opportunities/:id', async (req: Request, res: Response) => {
+  const prismaGetJobRepository = new PrismaGetJobRepository()
+  const getJobController = new GetJobController(prismaGetJobRepository)
+  const { body, statusCode } = await getJobController.handle(req)
   res.status(statusCode).json(body)
 })
 
@@ -34,6 +45,13 @@ routes.patch('/job-opportunities/:id', async (req: Request, res: Response) => {
       .json({ msg: 'At least one field must be provided for update.' })
   }
   const { body, statusCode } = await editJobController.handle(req)
+  res.status(statusCode).json(body)
+})
+
+routes.delete('/job-opportunities/:id', async (req: Request, res: Response) => {
+  const prismaDeleteJobRepository = new PrismaDeleteJobtRepository()
+  const deleteJobController = new DeleteJobController(prismaDeleteJobRepository)
+  const { body, statusCode } = await deleteJobController.handle(req)
   res.status(statusCode).json(body)
 })
 

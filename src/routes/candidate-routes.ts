@@ -57,7 +57,7 @@ routes.post(
   },
 )
 
-// Edit post
+// Edit post'
 routes.patch(
   '/post/:id',
   upload.single('IMAGE'),
