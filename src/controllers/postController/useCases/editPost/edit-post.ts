@@ -6,13 +6,11 @@ import { notFound, ok, serverError } from '@/helpers/http-helpers'
 import { NotFoundError } from '@/errors/not-found-error'
 
 export class EditPostController implements IController {
-  constructor(private readonly editPostRepository: IEditPostRepository) {
-    editPostRepository = this.editPostRepository
-  }
+  constructor(private readonly editPostRepository: IEditPostRepository) {}
 
   async handle(
     httpRequest: HttpRequest<IEditPostParams>,
-  ): Promise<HttpResponse<Post | any>> {
+  ): Promise<HttpResponse<Post | string>> {
     let body = httpRequest.body
     const id = httpRequest.params.id
     if (httpRequest.file)

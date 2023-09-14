@@ -3,7 +3,7 @@ import { ICreateVoluntaryParams, ICreateVoluntaryRepository } from './protocols'
 import { ZodError } from 'zod'
 import { Voluntary } from '@prisma/client'
 import { badRequest, ok, serverError } from '@/helpers/http-helpers'
-import VoluntarySchema from '@/schemas/voluntary'
+import voluntarySchema from '@/schemas/voluntary'
 
 export class CreateVoluntaryController implements IController {
   constructor(
@@ -15,7 +15,7 @@ export class CreateVoluntaryController implements IController {
   ): Promise<HttpResponse<Voluntary | string>> {
     let parsedBody
     try {
-      parsedBody = VoluntarySchema.parse(httpRequest.body)
+      parsedBody = voluntarySchema.parse(httpRequest.body)
     } catch (error: any) {
       if (error instanceof ZodError) {
         console.log(error.errors)

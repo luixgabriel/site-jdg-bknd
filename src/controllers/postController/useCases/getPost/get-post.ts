@@ -1,16 +1,15 @@
 import { HttpRequest, HttpResponse, IController } from '@/interfaces/https'
 import { Post } from '@prisma/client'
 import { IGetPostRepository } from './protocols'
-import { InvalidParamError } from '@/errors/invalid-param-error'
-import { forbidden, notFound, ok, serverError } from '@/helpers/http-helpers'
+import { notFound, ok, serverError } from '@/helpers/http-helpers'
 import { NotFoundError } from '@/errors/not-found-error'
 
 export class GetPostController implements IController {
-  constructor(private readonly getPostRepository: IGetPostRepository) {
-    getPostRepository = this.getPostRepository
-  }
+  constructor(private readonly getPostRepository: IGetPostRepository) {}
 
-  async handle(httpRequest: HttpRequest<any>): Promise<HttpResponse<Post>> {
+  async handle(
+    httpRequest: HttpRequest<any>,
+  ): Promise<HttpResponse<Post | string>> {
     try {
       const postExists = await this.getPostRepository.exists(
         httpRequest.params.id,

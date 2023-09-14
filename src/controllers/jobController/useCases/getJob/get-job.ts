@@ -6,9 +6,7 @@ import { NotFoundError } from '@/errors/not-found-error'
 import { IGetJobRepository } from './protocols'
 
 export class GetJobController implements IController {
-  constructor(private readonly getJobRepository: IGetJobRepository) {
-    this.getJobRepository = getJobRepository
-  }
+  constructor(private readonly getJobRepository: IGetJobRepository) {}
 
   async handle(
     httpRequest: HttpRequest,

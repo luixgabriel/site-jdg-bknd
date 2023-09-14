@@ -1,14 +1,11 @@
 import { HttpRequest, HttpResponse, IController } from '@/interfaces/https'
-import { forbidden, notFound, ok, serverError } from '@/helpers/http-helpers'
-import { InvalidParamError } from '@/errors/invalid-param-error'
+import { notFound, ok, serverError } from '@/helpers/http-helpers'
 import { IEditJobParams, IEditJobRepository } from './protocols'
 import { JobOpportunity } from '@prisma/client'
 import { NotFoundError } from '@/errors/not-found-error'
 
 export class EditJobController implements IController {
-  constructor(private readonly editJobRepository: IEditJobRepository) {
-    this.editJobRepository = editJobRepository
-  }
+  constructor(private readonly editJobRepository: IEditJobRepository) {}
 
   async handle(
     httpRequest: HttpRequest<IEditJobParams>,

@@ -4,9 +4,7 @@ import { ok, serverError } from '@/helpers/http-helpers'
 import { IGetAllJobsRepository } from './protocols'
 
 export class GetAllJobsController implements IController {
-  constructor(private readonly getAllJobsRepository: IGetAllJobsRepository) {
-    this.getAllJobsRepository = getAllJobsRepository
-  }
+  constructor(private readonly getAllJobsRepository: IGetAllJobsRepository) {}
 
   async handle(): Promise<HttpResponse<JobOpportunity[]>> {
     try {

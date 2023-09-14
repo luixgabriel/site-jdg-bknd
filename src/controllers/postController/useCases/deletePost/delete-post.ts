@@ -4,11 +4,11 @@ import { Post } from '@prisma/client'
 import { ok, serverError } from '@/helpers/http-helpers'
 
 export class DeletePostController implements IController {
-  constructor(private readonly deletePostRepository: IDeletetPostRepository) {
-    deletePostRepository = this.deletePostRepository
-  }
+  constructor(private readonly deletePostRepository: IDeletetPostRepository) {}
 
-  async handle(httpRequest: HttpRequest<any>): Promise<HttpResponse<Post>> {
+  async handle(
+    httpRequest: HttpRequest<any>,
+  ): Promise<HttpResponse<Post | string>> {
     try {
       const deletedPost = await this.deletePostRepository.deletePost(
         httpRequest.params.id,

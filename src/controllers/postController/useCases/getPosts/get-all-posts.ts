@@ -4,13 +4,11 @@ import { IGetAllPostsRepository } from './protocols'
 import { ok, serverError } from '@/helpers/http-helpers'
 
 export class GetAllPostsController implements IController {
-  constructor(private readonly getAllPostsRepository: IGetAllPostsRepository) {
-    this.getAllPostsRepository = getAllPostsRepository
-  }
+  constructor(private readonly getAllPostsRepository: IGetAllPostsRepository) {}
 
   async handle(
     httpRequest: HttpRequest<any>,
-  ): Promise<HttpResponse<Post[] | any>> {
+  ): Promise<HttpResponse<Post[] | string>> {
     const page = Number(httpRequest.query.page) || 1
     const limit = Number(httpRequest.query.limit as string) || 10
     const offset = (page - 1) * limit

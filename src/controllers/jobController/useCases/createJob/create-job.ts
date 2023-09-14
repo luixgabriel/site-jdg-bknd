@@ -1,26 +1,34 @@
 import { HttpRequest, HttpResponse, IController } from '@/interfaces/https'
 import { ICreateJobParams, ICreateJobRepository } from './protocols'
 import { JobOpportunity } from '@prisma/client'
-import { ok, serverError } from '@/helpers/http-helpers'
-import { z } from 'zod'
+import { badRequest, ok, serverError } from '@/helpers/http-helpers'
+import { ZodError } from 'zod'
+import jobOpportunitySchema from '@/schemas/job-opportunity'
 
 export class CreateJobController implements IController {
-  constructor(private readonly createJobRepository: ICreateJobRepository) {
-    this.createJobRepository = createJobRepository
-  }
+  constructor(private readonly createJobRepository: ICreateJobRepository) {}
 
   async handle(
     httpRequest: HttpRequest<ICreateJobParams>,
-  ): Promise<HttpResponse<JobOpportunity>> {
+  ): Promise<HttpResponse<JobOpportunity | string>> {
+    let parsedBody
     try {
-      const JobOpportunity = z.object({
-        title: z.string(),
-        description: z.string(),
-        stack: z.array(z.string()),
-        status: z.string().optional(),
-      })
+      parsedBody = jobOpportunitySchema.parse(httpRequest.body)
+    } catch (error: any) {
+      if (error instanceof ZodError) {
+        const missingFields = error.errors
+          .map((err) => err.path[0])
+          .filter(Boolean)
+          .join(', ')
+        return badRequest({
+          message: `Missing or invalid field(s): ${missingFields}`,
+        })
+      }
+      return serverError(error)
+    }
+    try {
       const jobOpportunity = await this.createJobRepository.createJob(
-        JobOpportunity.parse(httpRequest.body),
+        parsedBody,
       )
       return ok(jobOpportunity)
     } catch (error: any) {
