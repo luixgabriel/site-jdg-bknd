@@ -10,6 +10,8 @@ import { GetJobController } from '@/controllers/jobController/useCases/getJob/ge
 import { DeleteJobController } from '@/controllers/jobController/useCases/deleteJob/delete-job'
 import { PrismaDeleteJobtRepository } from '@/repositories/jobRepositories/deleteJob/prisma-delete-job'
 import { PrismaGetCandidateRepository } from '@/repositories/candidateRepositories/getCandidate/prisma-get-candidate'
+import { PrismaEditCandidateRepository } from '@/repositories/candidateRepositories/editCandidate/prisma-edit-candidate'
+import { PrismaDeleteCandidateRepository } from '@/repositories/candidateRepositories/deleteCandidate/prisma-delete-candidate'
 
 const routes = Router()
 
@@ -52,9 +54,13 @@ routes.patch('/job-opportunities/:id', async (req: Request, res: Response) => {
 routes.delete('/job-opportunities/:id', async (req: Request, res: Response) => {
   const prismaDeleteJobRepository = new PrismaDeleteJobtRepository()
   const prismaGetCandidateRepository = new PrismaGetCandidateRepository()
+  const prismaEditCandidateRepository = new PrismaEditCandidateRepository()
+  const prismaDeleteCandidateRepository = new PrismaDeleteCandidateRepository()
   const deleteJobController = new DeleteJobController(
     prismaDeleteJobRepository,
     prismaGetCandidateRepository,
+    prismaEditCandidateRepository,
+    prismaDeleteCandidateRepository,
   )
   const { body, statusCode } = await deleteJobController.handle(req)
   res.status(statusCode).json(body)
