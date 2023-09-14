@@ -1,6 +1,6 @@
 import { IDeleteJobRepository } from '@/controllers/jobController/useCases/deleteJob/protocols'
 import prisma from '@/lib/prisma'
-import { Client, JobOpportunity } from '@prisma/client'
+import { JobOpportunity } from '@prisma/client'
 
 export class PrismaDeleteJobtRepository implements IDeleteJobRepository {
   async getJob(id: string) {
@@ -12,12 +12,12 @@ export class PrismaDeleteJobtRepository implements IDeleteJobRepository {
   }
 
   async deleteJob(id: string): Promise<JobOpportunity> {
-    const Jobt = await prisma.jobOpportunity.delete({
+    const Job = await prisma.jobOpportunity.delete({
       where: {
         id,
       },
     })
 
-    return Jobt
+    return Job
   }
 }

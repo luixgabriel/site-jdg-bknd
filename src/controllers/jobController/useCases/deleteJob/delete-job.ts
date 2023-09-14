@@ -31,6 +31,13 @@ export class DeleteJobController implements IController {
           },
         })
         console.log(candidateBD)
+        if (candidateBD.applications === 0) {
+          console.log('chamei')
+          candidateBD = await prisma.candidate.delete({
+            where: { id: candidateBD.id },
+          })
+          console.log(candidateBD)
+        }
       })
 
       const deletedJob = await this.deleteJobRepository.deleteJob(
