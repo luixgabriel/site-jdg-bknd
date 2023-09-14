@@ -1,7 +1,7 @@
 import { HttpRequest, HttpResponse, IController } from '@/interfaces/https'
 import { ICreateClientParams, ICreateClientRepository } from './protocols'
 import { Client } from '@prisma/client'
-import { ZodError, z } from 'zod'
+import { ZodError } from 'zod'
 import { badRequest, ok, serverError } from '@/helpers/http-helpers'
 import generateImage from '@/utils/generateImage'
 import clientSchema from '@/schemas/client'

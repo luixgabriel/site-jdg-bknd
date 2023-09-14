@@ -9,7 +9,9 @@ export class GetClientController implements IController {
     getClientRepository = this.getClientRepository
   }
 
-  async handle(httpRequest: HttpRequest<any>): Promise<HttpResponse<Client>> {
+  async handle(
+    httpRequest: HttpRequest<any>,
+  ): Promise<HttpResponse<Client | string>> {
     try {
       const clientExists = await this.getClientRepository.exists(
         httpRequest.params.id,

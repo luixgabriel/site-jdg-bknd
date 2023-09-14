@@ -6,11 +6,11 @@ import { IDeleteClientRepository } from './protocols'
 export class DeleteClientController implements IController {
   constructor(
     private readonly deleteClientRepository: IDeleteClientRepository,
-  ) {
-    deleteClientRepository = this.deleteClientRepository
-  }
+  ) {}
 
-  async handle(httpRequest: HttpRequest<any>): Promise<HttpResponse<Client>> {
+  async handle(
+    httpRequest: HttpRequest<any>,
+  ): Promise<HttpResponse<Client | string>> {
     try {
       const deletedClient = await this.deleteClientRepository.deleteClient(
         httpRequest.params.id,

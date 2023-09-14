@@ -12,7 +12,7 @@ export class EditClientController implements IController {
 
   async handle(
     httpRequest: HttpRequest<IEditClientParams>,
-  ): Promise<HttpResponse<Client | any>> {
+  ): Promise<HttpResponse<Client | string>> {
     let body = httpRequest.body
     const id = httpRequest.params.id
     if (httpRequest.file)

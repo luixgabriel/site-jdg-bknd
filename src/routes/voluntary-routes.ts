@@ -23,7 +23,7 @@ routes.get('/voluntary', async (req: Request, res: Response) => {
   res.status(statusCode).json(body)
 })
 
-// GET Voluntary by ID
+// Get voluntary by ID
 routes.get('/voluntary/:id', async (req: Request, res: Response) => {
   const prismaGetVoluntaryRepository = new PrismaGetVoluntaryRepository()
   const getPostController = new GetVoluntaryController(
