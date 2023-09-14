@@ -1,28 +1,38 @@
 import { IController, HttpRequest, HttpResponse } from '@/interfaces/https'
 import { ICreateVoluntaryParams, ICreateVoluntaryRepository } from './protocols'
-import { z } from 'zod'
+import { ZodError } from 'zod'
 import { Voluntary } from '@prisma/client'
-import { ok, serverError } from '@/helpers/http-helpers'
+import { badRequest, ok, serverError } from '@/helpers/http-helpers'
+import VoluntarySchema from '@/schemas/voluntary'
 
 export class CreateVoluntaryController implements IController {
   constructor(
     private readonly createVoluntaryRepository: ICreateVoluntaryRepository,
-  ) {
-    createVoluntaryRepository = this.createVoluntaryRepository
-  }
+  ) {}
 
   async handle(
     httpRequest: HttpRequest<ICreateVoluntaryParams>,
   ): Promise<HttpResponse<Voluntary | string>> {
+    let parsedBody
     try {
-      const Voluntary = z.object({
-        name: z.string(),
-        email: z.string().email().trim().toLowerCase(),
-        stack: z.array(z.string()),
-      })
+      parsedBody = VoluntarySchema.parse(httpRequest.body)
+    } catch (error: any) {
+      if (error instanceof ZodError) {
+        console.log(error.errors)
+        const missingFields = error.errors
+          .map((err) => err.path[0])
+          .filter(Boolean)
+          .join(', ')
+        return badRequest({
+          message: `Missing or invalid field(s): ${missingFields}`,
+        })
+      }
+      return serverError(error)
+    }
 
+    try {
       const voluntary = await this.createVoluntaryRepository.createVoluntary(
-        Voluntary.parse(httpRequest.body),
+        parsedBody,
       )
       return ok(voluntary)
     } catch (error: any) {

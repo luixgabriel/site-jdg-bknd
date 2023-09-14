@@ -1,8 +1,7 @@
 import { HttpRequest, HttpResponse, IController } from '@/interfaces/https'
 import { IEditVoluntaryParams, IEditVoluntaryRepository } from './protocols'
 import { Voluntary } from '@prisma/client'
-import { forbidden, notFound, ok, serverError } from '@/helpers/http-helpers'
-import { InvalidParamError } from '@/errors/invalid-param-error'
+import { notFound, ok, serverError } from '@/helpers/http-helpers'
 import { NotFoundError } from '@/errors/not-found-error'
 
 export class EditVoluntaryController implements IController {
@@ -14,12 +13,9 @@ export class EditVoluntaryController implements IController {
 
   async handle(
     httpRequest: HttpRequest<IEditVoluntaryParams>,
-  ): Promise<HttpResponse<Voluntary | any>> {
+  ): Promise<HttpResponse<Voluntary | string>> {
     const body = httpRequest.body
     const id = httpRequest.params.id
-    if (!id) {
-      return forbidden(new InvalidParamError('voluntary ID'))
-    }
     try {
       const voluntaryExists = await this.editVoluntaryRepository.exists(id)
 

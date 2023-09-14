@@ -1,10 +1,6 @@
 import { Voluntary } from '@prisma/client'
 
-export interface IEditVoluntaryParams {
-  name?: string
-  email?: string
-  stack?: string[]
-}
+export type IEditVoluntaryParams = Partial<Voluntary>
 
 export interface IEditVoluntaryRepository {
   exists(id: string): Promise<boolean>

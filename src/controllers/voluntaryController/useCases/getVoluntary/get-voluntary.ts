@@ -7,13 +7,11 @@ import { NotFoundError } from '@/errors/not-found-error'
 export class GetVoluntaryController implements IController {
   constructor(
     private readonly getVoluntaryRepository: IGetVoluntaryRepository,
-  ) {
-    getVoluntaryRepository = this.getVoluntaryRepository
-  }
+  ) {}
 
   async handle(
     httpRequest: HttpRequest<any>,
-  ): Promise<HttpResponse<Voluntary>> {
+  ): Promise<HttpResponse<Voluntary | string>> {
     try {
       const voluntaryExists = await this.getVoluntaryRepository.exists(
         httpRequest.params.id,

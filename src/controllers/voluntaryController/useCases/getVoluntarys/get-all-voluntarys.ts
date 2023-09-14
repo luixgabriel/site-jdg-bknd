@@ -10,7 +10,7 @@ export class GetAllVoluntarysController implements IController {
     this.getAllVoluntarysRepository = getAllVoluntarysRepository
   }
 
-  async handle(): Promise<HttpResponse<Voluntary[]>> {
+  async handle(): Promise<HttpResponse<Voluntary[] | string>> {
     try {
       const voluntarys =
         await this.getAllVoluntarysRepository.getAllVoluntarys()

@@ -1,14 +1,12 @@
 import { HttpRequest, HttpResponse, IController } from '@/interfaces/https'
 import { IDeleteVoluntaryRepository } from './protocols'
-import { Post, Voluntary } from '@prisma/client'
+import { Voluntary } from '@prisma/client'
 import { ok, serverError } from '@/helpers/http-helpers'
 
 export class DeleteVoluntaryController implements IController {
   constructor(
     private readonly deleteVoluntaryRepository: IDeleteVoluntaryRepository,
-  ) {
-    deleteVoluntaryRepository = this.deleteVoluntaryRepository
-  }
+  ) {}
 
   async handle(
     httpRequest: HttpRequest<any>,

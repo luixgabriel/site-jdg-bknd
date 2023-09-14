@@ -36,7 +36,6 @@ export class PrismaCreateCandidateRepository
           },
         },
       })
-
       return candidate
     } else {
       const candidate = await prisma.candidate.create({

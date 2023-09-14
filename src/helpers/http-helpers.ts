@@ -2,7 +2,7 @@ import { NotFoundError } from '@/errors/not-found-error'
 import { ServerError } from '@/errors/server-error'
 import { HttpResponse } from '@/interfaces/https'
 
-export const badRequest = (error: Error): HttpResponse<any> => ({
+export const badRequest = (error: any): HttpResponse<any> => ({
   statusCode: 400,
   body: error,
 })
