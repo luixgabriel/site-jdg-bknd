@@ -8,18 +8,14 @@ const userSchema = z.object({
   name: z.string(),
   email: z.string().email(),
   password: z.string(),
-  role: z.enum(['user', 'admin']),
-})
+  stack: z.array(z.string())
+});
 
 type userSchemaOutPut = z.infer<typeof userSchema>
 
 export const createUserPrisma = async (userData: userSchemaOutPut) => {
   try {
-    const { name, email, password, role } = userSchema.parse(userData)
-
-    if (role === 'admin') {
-      throw new Error('Unauthorized to create an admin')
-    }
+    const { name, email, password, stack } = userSchema.parse(userData);
 
     const hashedPassword = await bcrypt.hash(password, 10)
 
@@ -28,7 +24,7 @@ export const createUserPrisma = async (userData: userSchemaOutPut) => {
         name,
         email,
         password: hashedPassword,
-        role,
+        stack
       },
     })
 
