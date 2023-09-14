@@ -56,6 +56,7 @@ routes.post(
 // Edit post
 routes.patch(
   '/post/:id',
+  withAuth,
   upload.single('IMAGE'),
   async (req: Request, res: Response) => {
     const prismaEditPostRepository = new PrismaEditPostRepository()
@@ -72,7 +73,7 @@ routes.patch(
 )
 
 // Delete post
-routes.delete('/post/:id', async (req: Request, res: Response) => {
+routes.delete('/post/:id', withAuth, async (req: Request, res: Response) => {
   const prismaDeletePostsRepository = new PrismaDeletePostRepository()
   const deletePostController = new DeletePostController(
     prismaDeletePostsRepository,

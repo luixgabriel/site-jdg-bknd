@@ -14,6 +14,7 @@ import { PrismaDeleteClientRepository } from '@/repositories/clientRepositories/
 import { DeleteClientController } from '@/controllers/clientController/useCases/deleteClient/delete-client'
 import { PrismaGetAllClientsRepository } from '@/repositories/clientRepositories/getClients/prisma-get-all-clients'
 import { GetAllClientsController } from '@/controllers/clientController/useCases/getClients/get-client'
+import { withAuth } from '@/middlewares/auth/withAuth'
 
 const routes = Router()
 const upload = multer(multerConfig)
@@ -39,6 +40,7 @@ routes.get('/client/:id', async (req: Request, res: Response) => {
 // Create client
 routes.post(
   '/client',
+  withAuth,
   upload.single('IMAGE'),
   async (req: Request, res: Response) => {
     const prismaCreateClientRepository = new PrismaCreateClientRepository()
@@ -53,6 +55,7 @@ routes.post(
 // Edit client
 routes.patch(
   '/client/:id',
+  withAuth,
   upload.single('IMAGE'),
   async (req: Request, res: Response) => {
     const prismaEditClientRepository = new PrismaEditClientRepository()
@@ -71,7 +74,7 @@ routes.patch(
 )
 
 // Delete client
-routes.delete('/client/:id', async (req: Request, res: Response) => {
+routes.delete('/client/:id', withAuth, async (req: Request, res: Response) => {
   const prismaDeleteClientRepository = new PrismaDeleteClientRepository()
   const deleteClientController = new DeleteClientController(
     prismaDeleteClientRepository,
