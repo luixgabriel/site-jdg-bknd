@@ -4,8 +4,6 @@ import multerConfig from '@/lib/multer'
 
 // Repositories
 import { Router, Request, Response } from 'express'
-import { PrismaCreatePostRepository } from '@/repositories/postRepositories/createPost/prisma-create-post'
-import { CreatePostController } from '@/controllers/postController/useCases/createPost/create-post'
 import { PrismaGetAllPostsRepository } from '@/repositories/postRepositories/getPosts/prisma-get-all-posts'
 import { GetAllPostsController } from '@/controllers/postController/useCases/getPosts/get-all-posts'
 import { PrismaEditPostRepository } from '@/repositories/postRepositories/editPost/prisma-edit-post'
@@ -15,19 +13,22 @@ import { DeletePostController } from '@/controllers/postController/useCases/dele
 import { PrismaGetPostRepository } from '@/repositories/postRepositories/getPost/prisma-get-post'
 import { GetPostController } from '@/controllers/postController/useCases/getPost/get-post'
 import { withAuth } from '@/middlewares/auth/withAuth'
-import { PrismaCreateCandidateRepository } from '@/repositories/candidateRepositories/prisma-create-candidate'
+import { PrismaCreateCandidateRepository } from '@/repositories/candidateRepositories/createCandidate/prisma-create-candidate'
 import { CreateCandidateController } from '@/controllers/candidateController/useCases/createCandidate/create-candidate'
+import { PrismaGetAllCandidatesRepository } from '@/repositories/candidateRepositories/getCandidates/prisma-get-all-candidates'
+import { GetAllCandidatesController } from '@/controllers/candidateController/useCases/getCandidates/get-all-candidates'
 
 const routes = Router()
 const upload = multer(multerConfig)
 
-// GET ALL POSTS
-routes.get('/post', async (req: Request, res: Response) => {
-  const prismaGetAllPostsRepository = new PrismaGetAllPostsRepository()
-  const getAllPostController = new GetAllPostsController(
-    prismaGetAllPostsRepository,
+// GET ALL CANDIDATES
+routes.get('/candidate', async (req: Request, res: Response) => {
+  const prismaGetAllCandidatesRepository =
+    new PrismaGetAllCandidatesRepository()
+  const getAllCandidatesController = new GetAllCandidatesController(
+    prismaGetAllCandidatesRepository,
   )
-  const { body, statusCode } = await getAllPostController.handle(req)
+  const { body, statusCode } = await getAllCandidatesController.handle()
   res.status(statusCode).json(body)
 })
 
@@ -76,13 +77,13 @@ routes.patch(
 )
 
 // Delete post
-routes.delete('/post/:id', async (req: Request, res: Response) => {
-  const prismaDeletePostsRepository = new PrismaDeletePostRepository()
-  const deletePostController = new DeletePostController(
-    prismaDeletePostsRepository,
-  )
-  const { body, statusCode } = await deletePostController.handle(req)
-  res.status(statusCode).json(body)
-})
+// routes.delete('/post/:id', async (req: Request, res: Response) => {
+//   const prismaDeleteCandidateRepository = new PrismaDeletePostRepository()
+//   const deletePostController = new DeletePostController(
+//     prismaDeletePostsRepository,
+//   )
+//   const { body, statusCode } = await deletePostController.handle(req)
+//   res.status(statusCode).json(body)
+// })
 
 export default routes

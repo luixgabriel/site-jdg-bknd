@@ -1,6 +1,6 @@
 import { JobOpportunity } from '@prisma/client'
 
 export interface IDeleteJobRepository {
-  exists(id: string): Promise<boolean>
+  getJob(id: string): Promise<any>
   deleteJob(id: string): Promise<JobOpportunity>
 }

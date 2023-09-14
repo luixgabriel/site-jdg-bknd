@@ -3,13 +3,12 @@ import prisma from '@/lib/prisma'
 import { Client, JobOpportunity } from '@prisma/client'
 
 export class PrismaDeleteJobtRepository implements IDeleteJobRepository {
-  async exists(id: string) {
-    const result = await prisma.jobOpportunity.findFirst({
-      where: {
-        id,
-      },
+  async getJob(id: string) {
+    const jobOpportunity = await prisma.jobOpportunity.findUnique({
+      where: { id },
+      include: { candidates: true },
     })
-    return result !== null
+    return jobOpportunity
   }
 
   async deleteJob(id: string): Promise<JobOpportunity> {
