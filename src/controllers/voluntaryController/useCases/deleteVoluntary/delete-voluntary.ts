@@ -4,6 +4,7 @@ import { Voluntary } from '@prisma/client'
 import { ok, serverError } from '@/helpers/http-helpers'
 
 export class DeleteVoluntaryController implements IController {
+
   constructor(
     private readonly deleteVoluntaryRepository: IDeleteVoluntaryRepository,
   ) {}
