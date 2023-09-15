@@ -15,7 +15,7 @@ model User {
   name                        String
   email                       String    @unique
   password                    String
-  stack                       String[]  
+  stack                       String[]
   role                        String    @default("user")
   authenticationCode          Int?
   authenticated               Boolean   @default(false)
@@ -26,6 +26,7 @@ model User {
 model Post {
   id          String   @id @default(uuid())
   title       String
+  subtitle    String
   description String
   image       String?
   createdAt   DateTime @default(now())

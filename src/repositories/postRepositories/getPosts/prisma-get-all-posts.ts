@@ -16,6 +16,7 @@ export class PrismaGetAllPostsRepository implements IGetAllPostsRepository {
       select: {
         id: true,
         title: true,
+        subtitle: true,
         description: true,
         image: true,
         createdAt: true,

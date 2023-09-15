@@ -1,10 +1,7 @@
 import { Post } from '@prisma/client'
+import { ICreatePostParams } from '../createPost/protocols'
 
-export interface IEditPostParams {
-  title?: string
-  description?: string
-  image?: string
-}
+export type IEditPostParams = Partial<ICreatePostParams>
 
 export interface IEditPostRepository {
   exists(id: string): Promise<boolean>
