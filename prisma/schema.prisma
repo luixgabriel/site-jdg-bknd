@@ -49,6 +49,7 @@ model JobOpportunity {
   id          String      @id @default(uuid())
   title       String
   description String
+  category    String
   status      jobStatus   @default(OPENED)
   stack       String[]
   candidates  Candidate[]
@@ -73,3 +74,10 @@ enum jobStatus {
   RECRUITING
   CLOSED
 }
+
+// enum Categorys {
+//   FRONTEND
+//   BACKEND
+//   UX
+//   DEVOPS
+// }

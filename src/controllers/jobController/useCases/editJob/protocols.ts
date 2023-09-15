@@ -3,6 +3,7 @@ import { JobOpportunity } from '@prisma/client'
 export interface IEditJobParams {
   title?: string
   description?: string
+  category?: string
   stack?: string[]
 }
 
