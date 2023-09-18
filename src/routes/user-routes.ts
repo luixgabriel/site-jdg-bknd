@@ -31,39 +31,39 @@ const routes = Router()
 // })
 
 routes.post(
-  '/create',
+  '/',
   validateAndTransformEmail,
   createUser
 )
 
 routes.post(
-  '/admin/create', 
+  '/admin', 
   validateAndTransformEmail,
   withAuth,
   createUserAdmin
 )
 
-routes.post('/login', validateAndTransformEmail, login)
+routes.post('/auth/login', validateAndTransformEmail, login)
 
-routes.get('/getuser', validateAndTransformEmail, withAuth, getUser)
+routes.get('/', validateAndTransformEmail, withAuth, getUser)
 
-routes.get('/getusers', withAuth, getUsers)
+routes.get('/all', withAuth, getUsers)
 
 routes.post(
-  '/authentication/send-code',
+  '/auth/send-code',
   validateAndTransformEmail,
   sendAuthenticationCode,
 )
 
 routes.post(
-  '/authentication/verify-code',
+  '/auth/verify-code',
   validateAndTransformEmail,
   verifyAuthenticationCode,
 )
 
-routes.post('/passwordrequest', requestPasswordReset)
+routes.post('/password-reset-request', requestPasswordReset)
 
-routes.post('/passwordrecovery', resetPassword)
+routes.post('/password-reset', resetPassword)
 
 routes.put('/', withAuth, updateUser)
 
