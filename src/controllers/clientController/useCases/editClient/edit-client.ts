@@ -16,7 +16,7 @@ export class EditClientController implements IController {
     let body = httpRequest.body
     const id = httpRequest.params.id
     if (httpRequest.file)
-      body = generateImage(httpRequest.file.filename, httpRequest.body)
+      body = await generateImage(httpRequest.file.path, httpRequest.body)
     try {
       const clientExists = await this.editClientRepository.exists(id)
 

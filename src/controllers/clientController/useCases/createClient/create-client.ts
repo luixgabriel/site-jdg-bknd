@@ -16,7 +16,7 @@ export class CreateClientController implements IController {
   ): Promise<HttpResponse<Client | string>> {
     let body = httpRequest.body
     if (httpRequest.file)
-      body = generateImage(httpRequest.file.filename, httpRequest.body)
+      body = await generateImage(httpRequest.file.path, httpRequest.body)
 
     let parsedBody
     try {
