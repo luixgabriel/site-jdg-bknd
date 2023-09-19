@@ -9,6 +9,9 @@
     "test": "jest --watch",
     "build": "tsc"
   },
+  "engines": {
+    "node": "18"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Juniors-Developers-Group-JDG/Site-JDG-Back-End.git"
