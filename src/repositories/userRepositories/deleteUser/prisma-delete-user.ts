@@ -1,11 +1,10 @@
 import prisma from '@/lib/prisma'
-import { User } from '@prisma/client'
 
-export const deleteUserPrisma = async (user: User) => {
+export const deleteUserPrisma = async (id: string) => {
   try {
     const userDeleted = await prisma.user.delete({
       where: {
-        id: user.id,
+        id,
       },
     })
     prisma.$disconnect()

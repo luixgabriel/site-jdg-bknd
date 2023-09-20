@@ -10,10 +10,10 @@ export const getUser = async (req: Request, res: Response) => {
     return res.status(403).json({error: "Required user admin"})
   }
 
-  const { email } = req.body
+  const { id } = req.params
 
   try {
-    const user = await getUserPrisma(email)
+    const user = await getUserPrisma(id)
     res.status(200).json(user)
   } catch (error: any) {
     res.status(500).json(error.message)
