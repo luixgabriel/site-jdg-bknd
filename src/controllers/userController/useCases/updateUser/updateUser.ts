@@ -1,9 +1,9 @@
-import { passwordValidator } from '@/middlewares/validators/passwordValidator'
-import { updateUserPrisma } from '@/repositories/userRepositories/updateUser/prisma-update-user'
-import { Request, Response } from 'express'
-import bcrypt from 'bcrypt'
-import { validateStack } from '@/utils/userUtils/validateStack'
-import { getUserPrisma } from '@/repositories/userRepositories/getUser/prisma-get-user'
+import { passwordValidator } from "@/middlewares/validators/passwordValidator";
+import { updateUserPrisma } from "@/repositories/userRepositories/updateUser/prisma-update-user";
+import { Request, Response } from "express"
+import bcrypt from 'bcrypt';
+import { validateStack } from "@/utils/userUtils/validateStack";
+import { getUserPrisma } from "@/repositories/userRepositories/getUser/prisma-get-user";
 
 interface UpdateData {
   name?: string
@@ -22,9 +22,7 @@ export const updateUser = async (req: Request, res: Response) => {
   const updateData: UpdateData = {}
 
   if (!name && !password && !stack) {
-    return res
-      .status(400)
-      .json({ error: 'At least one of name, password, or stack is required.' })
+    return res.status(400).json({ error: 'At least one of name, password, or stack is required.' })
   }
 
   try {
@@ -48,15 +46,15 @@ export const updateUser = async (req: Request, res: Response) => {
     updateData.stack = stack
   }
 
-  const user = await getUserPrisma(id)
+  const user = await getUserPrisma(id);
 
   if (!user) {
-    return res.status(404).json({ error: 'User not found!' })
+    return res.status(404).json({ error: "User not found!" });
   }
 
   try {
-    const updatedUser = await updateUserPrisma(user, updateData)
-    res.status(200).json(updatedUser)
+    const updatedUser = await updateUserPrisma(user, updateData);
+    res.status(200).json(updatedUser);
   } catch (error) {
     res
       .status(500)
