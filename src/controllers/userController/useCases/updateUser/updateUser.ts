@@ -22,9 +22,7 @@ export const updateUser = async (req: Request, res: Response) => {
   const updateData: UpdateData = {}
 
   if (!name && !password && !stack) {
-    return res
-      .status(400)
-      .json({ error: 'At least one of name, password, or stack is required.' })
+    return res.status(400).json({ error: 'At least one of name, password, or stack is required.' })
   }
 
   try {
