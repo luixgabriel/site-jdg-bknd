@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { Request, Response } from 'express'
 import 'module-alias/register'
 import userRoutes from '@/routes/user-routes'
 import postRoutes from '@/routes/post-routes'
@@ -22,6 +22,10 @@ app.use('/', voluntaryRoutes)
 app.use('/', jobRoutes)
 app.use('/', clientRoutes)
 app.use('/', candidateRoutes)
+
+app.get('/', (req: Request, res: Response) => {
+  res.send('API Running!')
+})
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`)

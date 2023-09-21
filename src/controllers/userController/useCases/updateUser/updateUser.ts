@@ -6,42 +6,44 @@ import { validateStack } from "@/utils/userUtils/validateStack";
 import { getUserPrisma } from "@/repositories/userRepositories/getUser/prisma-get-user";
 
 interface UpdateData {
-  name?: string;
-  password?: string;
-  stack?: string[];
+  name?: string
+  password?: string
+  stack?: string[]
 }
 
 export const updateUser = async (req: Request, res: Response) => {
-  if(!req.user){
-    return res.status(400).json({error: "Required user"})
+  if (!req.user) {
+    return res.status(400).json({ error: 'Required user' })
   }
-  
+
   const { name, password, stack } = req.body
   const { id } = req.params
 
   const updateData: UpdateData = {}
 
   if (!name && !password && !stack) {
-    return res.status(400).json({ error: "At least one of name, password, or stack is required." });
+    return res
+      .status(400)
+      .json({ error: 'At least one of name, password, or stack is required.' })
   }
-  
+
   try {
     if (password) {
-      passwordValidator.parse(password);
+      passwordValidator.parse(password)
       updateData.password = await bcrypt.hash(password, 10)
     }
   } catch (error: any) {
-    return res.status(400).json({ error: error.message });
+    return res.status(400).json({ error: error.message })
   }
 
   if (name !== undefined) {
-    updateData.name = name;
+    updateData.name = name
   }
 
-  if(stack){
+  if (stack) {
     const stackValidationResult = validateStack(req.body.stack)
     if (stackValidationResult !== null) {
-      return res.status(400).json({ error: stackValidationResult });
+      return res.status(400).json({ error: stackValidationResult })
     }
     updateData.stack = stack
   }
@@ -56,6 +58,8 @@ export const updateUser = async (req: Request, res: Response) => {
     const updatedUser = await updateUserPrisma(user, updateData);
     res.status(200).json(updatedUser);
   } catch (error) {
-    res.status(500).json({ error: "An error occurred while updating the user." });
+    res
+      .status(500)
+      .json({ error: 'An error occurred while updating the user.' })
   }
 }
