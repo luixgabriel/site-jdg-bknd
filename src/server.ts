@@ -24,7 +24,7 @@ app.use('/', clientRoutes)
 app.use('/', candidateRoutes)
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('API Running!')
+  res.send('API Running! :)')
 })
 
 app.listen(port, () => {
