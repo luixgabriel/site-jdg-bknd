@@ -25,8 +25,6 @@ routes.post('/admin', validateAndTransformEmail, withAuth, createUserAdmin)
 
 routes.post('/auth/login', validateAndTransformEmail, login)
 
-routes.get('/:id', withAuth, getUser)
-
 routes.get('/all', withAuth, getUsers)
 
 routes.post(
@@ -44,6 +42,8 @@ routes.post(
 routes.post('/password-reset-request', requestPasswordReset)
 
 routes.post('/password-reset', resetPassword)
+
+routes.get('/:id', withAuth, getUser)
 
 routes.patch('/:id', withAuth, updateUser)
 
