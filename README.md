@@ -4,6 +4,20 @@ ROUTES
 
 ## Endpoints
 
+#### Posts
+
+- `GET /post`: Lista todas as postagens cadastradas no banco de dados.
+- `GET /post/:id`: Lista uma postagem específica pelo seu id.
+- `POST /post`: Realiza um cadastro de uma nova postagem no banco de dados. Nota: Uma imagem pode ser enviada como parte da postagem.
+- `PATCH /post/:id`: Realiza a atualização no cadastro de uma postagem específica pelo seu id. Nota: Uma imagem pode ser atualizada durante esse processo.
+- `DELETE /post/:id`: Deleta uma postagem específica pelo seu id.
+
+### **Observações**
+- Na hora da criação do post precisa referenciar o user que criou ele com o id do user no campo authorId.
+- O middleware `withAuth` é usado para garantir que o usuário esteja autenticado em algumas rotas.
+- Para as rotas que aceitam upload de imagem, o arquivo deve ser enviado com a chave `IMAGE`.
+- Ao atualizar uma postagem com a rota `PATCH`, ao menos um campo ou imagem deve ser fornecido para atualização.
+
 #### Candidates
 
 - `GET /candidate`: Lista todos os candidatos cadastrados no banco de dados.
