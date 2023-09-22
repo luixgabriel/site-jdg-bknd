@@ -1,7 +1,67 @@
 # Site-JDG-Back-End
 
-ROUTES 
+## Modelos e Relações
 
+### Usuário (`User`)
+
+- **id**: String (UUID gerado automaticamente)
+- **name**: String
+- **email**: String (único)
+- **password**: String
+- **stack**: Array de Strings (Tecnologias que o usuário conhece)
+- **role**: String (default é "user")
+- **authenticationCode**: Int (opcional)
+- **authenticated**: Boolean (default é `false`)
+- **authenticationCodeCreatedAt**: DateTime (opcional)
+- **Post**: Relação com a tabela de Postagens (`Post`)
+
+### Postagem (`Post`)
+
+- **id**: String (UUID gerado automaticamente)
+- **title**: String
+- **subtitle**: String
+- **description**: String
+- **image**: String (opcional)
+- **createdAt**: DateTime (data e hora da criação)
+- **author**: Relação com o modelo de Usuário (`User`)
+- **authorId**: String (ID do autor)
+
+### Candidato (`Candidate`)
+
+- **id**: String (UUID gerado automaticamente)
+- **name**: String
+- **email**: String (único)
+- **telephone**: String
+- **cv**: String (URL do currículo)
+- **github**: String (URL do perfil do GitHub)
+- **linkedin**: String (URL do perfil do LinkedIn)
+- **applications**: Int (default é 1)
+- **jobOpportunities**: Relação com o modelo de Oportunidades de Trabalho (`JobOpportunity`)
+
+### Oportunidade de Trabalho (`JobOpportunity`)
+
+- **id**: String (UUID gerado automaticamente)
+- **title**: String
+- **description**: String
+- **category**: String
+- **status**: Enum (`OPENED`, `RECRUITING`, `CLOSED`) - status da vaga (default é `OPENED`)
+- **stack**: Array de Strings (Tecnologias requeridas para a vaga)
+- **candidates**: Relação com o modelo de Candidato (`Candidate`)
+
+### Voluntário (`Voluntary`)
+
+- **id**: String (UUID gerado automaticamente)
+- **name**: String
+- **email**: String (único)
+- **stack**: Array de Strings (Tecnologias que o voluntário conhece)
+
+### Cliente (`Client`)
+
+- **id**: String (UUID gerado automaticamente)
+- **name**: String
+- **email**: String (único)
+- **image**: String (URL da imagem)
+ 
 ## Endpoints
 
 #### Posts
