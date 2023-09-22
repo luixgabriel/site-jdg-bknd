@@ -61,6 +61,64 @@
 - **name**: String
 - **email**: String (único)
 - **image**: String (URL da imagem)
+
+## Exemplos dos Schemas
+
+### Usuário (`User`)
+
+{
+  "name": "João Silva",
+  "email": "joao.silva@email.com",
+  "password": "senhaSegura123",
+  "stack": ["JavaScript", "React", "Node.js"]
+}
+
+### Posts (`Post`)
+
+{
+  "title": "Título da Postagem",
+  "subtitle": "Subtítulo da Postagem",
+  "description": "Descrição completa da postagem.",
+  "image": "url/da/imagem.jpg",
+  "authorId": "uuid-do-autor"
+}
+
+### Candidato (`Candidate`)
+
+{
+  "name": "Maria Pereira",
+  "email": "maria.pereira@email.com",
+  "telephone": "+5511999999999",
+  "cv": "url/do/curriculo.pdf",
+  "github": "https://github.com/mariapereira",
+  "linkedin": "https://linkedin.com/in/mariapereira"
+  "jobOpportunities": "ID da vaga de emprego"
+}
+
+### Oportunidade de emprego (`JobOpportunity`)
+
+{
+  "title": "Desenvolvedor(a) Front-end",
+  "description": "Vaga para desenvolvedor(a) front-end com experiência em React.",
+  "category": "Front-End",
+  "stack": ["React", "JavaScript", "CSS"]
+}
+
+### Voluntário (`Voluntary`)
+
+{
+  "name": "Carlos Souza",
+  "email": "carlos.souza@email.com",
+  "stack": ["Node.js", "GraphQL"]
+}
+
+### Cliente (`Client`)
+
+{
+  "name": "Empresa XYZ",
+  "email": "contato@empresaxyz.com",
+  "image": "url/logo.jpg"
+}
  
 ## Endpoints
 
