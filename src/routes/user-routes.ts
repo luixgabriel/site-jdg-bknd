@@ -25,7 +25,7 @@ routes.post('/admin', validateAndTransformEmail, withAuth, createUserAdmin)
 
 routes.post('/auth/login', validateAndTransformEmail, login)
 
-routes.get('/:id', validateAndTransformEmail, withAuth, getUser)
+routes.get('/:id', withAuth, getUser)
 
 routes.get('/all', withAuth, getUsers)
 
