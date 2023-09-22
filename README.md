@@ -12,7 +12,7 @@ ROUTES
 - `PATCH /post/:id`: Realiza a atualização no cadastro de uma postagem específica pelo seu id. Nota: Uma imagem pode ser atualizada durante esse processo.
 - `DELETE /post/:id`: Deleta uma postagem específica pelo seu id.
 
-### **Observações**
+#### Observações**
 - Na hora da criação do post precisa referenciar o user que criou ele com o id do user no campo authorId.
 - O middleware `withAuth` é usado para garantir que o usuário esteja autenticado em algumas rotas.
 - Para as rotas que aceitam upload de imagem, o arquivo deve ser enviado com a chave `IMAGE`.
@@ -26,7 +26,7 @@ ROUTES
 - `PATCH /candidate/:id`: Realiza a atualização no cadastro de um candidato específico pelo id no banco de dados.
 - `DELETE /candidate/:id`: Deleta um candidato específico pelo id no banco de dados.
 
-### **Observações**
+#### **Observações**
 - O Candidato na hora da criação precisa referenciar o JobOpportunity que ele deseja com o id do Job no campo jobOpportunities.
 - O middleware `withAuth` é usado para garantir que o usuário esteja autenticado em algumas rotas.
 - O CV de um candidato, ao ser enviado, deve estar no formato PDF e com a chave `CV` em um formulário multipart/form-data.
@@ -39,7 +39,7 @@ ROUTES
 - `PATCH /job-opportunities/:id`: Realiza a atualização no cadastro de uma oportunidade de emprego específica pelo id no banco de dados.
 - `DELETE /job-opportunities/:id`: Deleta uma oportunidade de emprego específica pelo id no banco de dados.
 
-### **Observações**
+#### **Observações**
 - O middleware `withAuth` é usado para garantir que o usuário esteja autenticado em algumas rotas.
 
   
@@ -64,5 +64,5 @@ ROUTES
 - `PATCH /voluntary/:id`: Realiza a atualização no cadastro de um voluntário específico pelo id no banco de dados.
 - `DELETE /voluntary/:id`: Deleta um voluntário específico pelo id no banco de dados.
 
-### **Observações**
+#### **Observações**
 - Ao atualizar um voluntário com a rota `PATCH`, ao menos um campo deve ser fornecido para atualização.
