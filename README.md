@@ -13,6 +13,7 @@ ROUTES
 - `DELETE /candidate/:id`: Deleta um candidato específico pelo id no banco de dados.
 
 ### **Observações**
+- O Candidato na hora da criação precisa referenciar o JobOpportunity que ele deseja com o id do Job no campo jobOpportunities.
 - O middleware `withAuth` é usado para garantir que o usuário esteja autenticado em algumas rotas.
 - O CV de um candidato, ao ser enviado, deve estar no formato PDF e com a chave `CV` em um formulário multipart/form-data.
 
