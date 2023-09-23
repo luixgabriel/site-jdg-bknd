@@ -122,6 +122,25 @@
  
 ## Endpoints
 
+## Users
+- `GET /user/all`: Lista todos os usuários existentes.
+- `GET /user/:id`: Lista um usuário em específico.
+- `POST /user`: Cria um usuário.
+- `POST /user/admin`: Cria um usuário podendo até mesmo criar um administrador.
+- `POST /user/auth/login`: Faz login sendo possivel receber alguns dados do usuário e um token. 
+- `POST /user/auth/send-code`: Envia um código de autenticação para o email do usuário.
+- `POST /user/auth/verify-code`: Verifica se o código digitado pelo usuário corresponde ao enviado ao email.
+- `POST /user/password-reset-request`: Solicita que seja enviado um código ao email do usuário contendo um novo codigo de autenticação mas para alteração de password.
+- `POST /user/password-reset`: Altera a senha atráves do codigo fornecido pelo usuário, verificando se o mesmo é igual ao enviado ao email.
+- `PATCH /user/:id`: Atualiza nome e/ou stack do usuário.
+- `DELETE /user/:id`: Delete o usuário.
+
+#### Observações**
+
+- Todas as rotas que necessitam de ID, a rota /all e /admin necessitam de autorização atráves do token fornecido pelo login.
+- As rotas /all e /admin so podem ser utilizadas por usuários admins.
+- As rotas com /:id so vão funcionar nas duas seguintes ocasiões, o id se referenciar ao usuário logado, que é verificado automáticamente pelo token fornecido ou se o usuário for administrador, ou seja, podendo fazer alterções em qualquer outros usuários.
+
 #### Posts
 
 - `GET /post`: Lista todas as postagens cadastradas no banco de dados.
