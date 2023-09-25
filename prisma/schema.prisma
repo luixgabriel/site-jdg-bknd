@@ -84,6 +84,7 @@ model Client {
 enum jobStatus {
   OPENED
   RECRUITING
+  HIRING
   CLOSED
 }
 
