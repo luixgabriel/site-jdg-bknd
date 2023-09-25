@@ -1,5 +1,5 @@
 const generatePdf = (filename: string, body?: any): any => {
-  const url = 'https://jdg-site.onrender.com/' + filename
+  const url = `http://localhost:3000/${filename}`
   if (body) {
     body = { ...body, cv: url }
   }

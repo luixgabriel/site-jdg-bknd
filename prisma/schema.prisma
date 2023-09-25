@@ -20,6 +20,8 @@ model User {
   authenticationCode          Int?
   authenticated               Boolean   @default(false)
   authenticationCodeCreatedAt DateTime?
+  createdAt                   DateTime  @default(now())
+  updatedAt                   DateTime  @updatedAt
   Post                        Post[]
 }
 
@@ -30,6 +32,7 @@ model Post {
   description String
   image       String?
   createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   author      User     @relation(fields: [authorId], references: [id])
   authorId    String
 }
@@ -42,6 +45,8 @@ model Candidate {
   cv               String
   github           String
   linkedin         String
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
   applications     Int              @default(1)
   jobOpportunities JobOpportunity[]
 }
@@ -53,21 +58,27 @@ model JobOpportunity {
   category    String
   status      jobStatus   @default(OPENED)
   stack       String[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
   candidates  Candidate[]
 }
 
 model Voluntary {
-  id    String   @id @default(uuid())
-  name  String
-  email String   @unique
-  stack String[]
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  stack     String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Client {
-  id    String @id @default(uuid())
-  name  String
-  email String @unique
-  image String
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  image     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum jobStatus {

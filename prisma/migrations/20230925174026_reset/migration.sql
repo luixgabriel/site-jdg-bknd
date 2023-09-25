@@ -12,6 +12,8 @@ CREATE TABLE "User" (
     "authenticationCode" INTEGER,
     "authenticated" BOOLEAN NOT NULL DEFAULT false,
     "authenticationCodeCreatedAt" TIMESTAMP(3),
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -24,6 +26,7 @@ CREATE TABLE "Post" (
     "description" TEXT NOT NULL,
     "image" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
     "authorId" TEXT NOT NULL,
 
     CONSTRAINT "Post_pkey" PRIMARY KEY ("id")
@@ -38,6 +41,8 @@ CREATE TABLE "Candidate" (
     "cv" TEXT NOT NULL,
     "github" TEXT NOT NULL,
     "linkedin" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
     "applications" INTEGER NOT NULL DEFAULT 1,
 
     CONSTRAINT "Candidate_pkey" PRIMARY KEY ("id")
@@ -51,6 +56,8 @@ CREATE TABLE "JobOpportunity" (
     "category" TEXT NOT NULL,
     "status" "jobStatus" NOT NULL DEFAULT 'OPENED',
     "stack" TEXT[],
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "JobOpportunity_pkey" PRIMARY KEY ("id")
 );
@@ -61,6 +68,8 @@ CREATE TABLE "Voluntary" (
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "stack" TEXT[],
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Voluntary_pkey" PRIMARY KEY ("id")
 );
@@ -71,6 +80,8 @@ CREATE TABLE "Client" (
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "image" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Client_pkey" PRIMARY KEY ("id")
 );

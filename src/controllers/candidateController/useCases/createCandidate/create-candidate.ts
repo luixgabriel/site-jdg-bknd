@@ -30,7 +30,6 @@ export class CreateCandidateController implements IController {
         return badRequest(errorMessages)
       }
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
-        // Erro de campo necessário faltando
         if (error.code === 'P2012') {
           const missingFields = error?.meta?.target as string[] // asserção de tipo aqui
           return badRequest(

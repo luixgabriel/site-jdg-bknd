@@ -12,6 +12,8 @@ export class PrismaGetAllJobsRepository implements IGetAllJobsRepository {
         category: true,
         status: true,
         stack: true,
+        createdAt: true,
+        updatedAt: true,
         candidates: {
           select: {
             id: true,
