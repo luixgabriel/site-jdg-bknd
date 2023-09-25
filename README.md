@@ -140,6 +140,7 @@
 - Todas as rotas que necessitam de ID, a rota /all e /admin necessitam de autorização atráves do token fornecido pelo login.
 - As rotas /all e /admin so podem ser utilizadas por usuários admins.
 - As rotas com /:id so vão funcionar nas duas seguintes ocasiões, o id se referenciar ao usuário logado, que é verificado automáticamente pelo token fornecido ou se o usuário for administrador, ou seja, podendo fazer alterções em qualquer outros usuários.
+- Modelo de senha aceito contém 1 letra maiúscula, 1 letra minuscula, 1 caracter especial, 1 numero.
 
 #### Posts
 
