@@ -4,13 +4,13 @@ import { badRequest, ok, serverError } from '@/helpers/http-helpers'
 import { ICreateCandidateParams, ICreateCandidateRepository } from './protocols'
 import generatePdf from '@/utils/generatePdf'
 import { ZodError } from 'zod'
+import { IGetJobRepository } from '@/controllers/jobController/useCases/getJob/protocols'
 
 export class CreateCandidateController implements IController {
   constructor(
     private readonly createCandidateRepository: ICreateCandidateRepository,
-  ) {
-    createCandidateRepository = this.createCandidateRepository
-  }
+    private readonly getJobRepository: IGetJobRepository,
+  ) {}
 
   async handle(
     httpRequest: HttpRequest<ICreateCandidateParams>,
@@ -19,6 +19,13 @@ export class CreateCandidateController implements IController {
     if (httpRequest.file)
       body = generatePdf(httpRequest.file.filename, httpRequest.body)
     try {
+      const result = await this.getJobRepository.findCandidateByEmail(
+        body?.email,
+        body?.jobOpportunities,
+      )
+      if (result) {
+        return badRequest('This candidate is already running for this job.')
+      }
       const candidate = await this.createCandidateRepository.createCandidate(
         body,
       )

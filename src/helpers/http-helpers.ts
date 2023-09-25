@@ -4,7 +4,9 @@ import { HttpResponse } from '@/interfaces/https'
 
 export const badRequest = (error: any): HttpResponse<any> => ({
   statusCode: 400,
-  body: error,
+  body: {
+    message: error,
+  },
 })
 
 export const forbidden = (error: Error): HttpResponse<any> => ({

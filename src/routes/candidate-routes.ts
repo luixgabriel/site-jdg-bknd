@@ -15,6 +15,7 @@ import { PrismaDeleteCandidateRepository } from '@/repositories/candidateReposit
 import { DeleteCandidateController } from '@/controllers/candidateController/useCases/deleteCandidate/delete-candidate'
 import { PrismaGetCandidateRepository } from '@/repositories/candidateRepositories/getCandidate/prisma-get-candidate'
 import { GetCandidateController } from '@/controllers/candidateController/useCases/getCandidate/get-candidate'
+import { PrismaGetJobRepository } from '@/repositories/jobRepositories/getJob/prisma-get-job'
 
 const routes = Router()
 const upload = multer(multerConfig)
@@ -51,8 +52,10 @@ routes.post(
     }
     const prismaCreateCandidateRepository =
       new PrismaCreateCandidateRepository()
+    const prismaGetJobRepository = new PrismaGetJobRepository()
     const createCandidateController = new CreateCandidateController(
       prismaCreateCandidateRepository,
+      prismaGetJobRepository,
     )
     const { body, statusCode } = await createCandidateController.handle(req)
     res.status(statusCode).json(body)
