@@ -8,6 +8,7 @@ import clientRoutes from '@/routes/client-routes'
 import candidateRoutes from '@/routes/candidate-routes'
 import { resolve } from 'path'
 import dotenv from 'dotenv'
+import cors from 'cors'
 
 dotenv.config()
 
@@ -16,6 +17,7 @@ const port = process.env.PORT || 3000
 
 app.use(express.json())
 app.use(express.static(resolve(__dirname, './', 'uploads')))
+app.use(cors())
 app.use('/users', userRoutes)
 app.use('/', postRoutes)
 app.use('/', voluntaryRoutes)
