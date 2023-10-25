@@ -6,6 +6,7 @@ const jobOpportunitySchema = z.object({
   stack: z.array(z.string()),
   category: z.string(),
   status: z.string().optional(),
+  endDate: z.date(),
 })
 
 export default jobOpportunitySchema

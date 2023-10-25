@@ -11,9 +11,14 @@ export class CreateJobController implements IController {
   async handle(
     httpRequest: HttpRequest<ICreateJobParams>,
   ): Promise<HttpResponse<JobOpportunity | string>> {
+    const bodyDate = httpRequest.body?.endDate as any
+    const BodyAtt = {
+      ...httpRequest.body,
+      endDate: new Date(bodyDate),
+    }
     let parsedBody
     try {
-      parsedBody = jobOpportunitySchema.parse(httpRequest.body)
+      parsedBody = jobOpportunitySchema.parse(BodyAtt)
     } catch (error: any) {
       if (error instanceof ZodError) {
         const missingFields = error.errors

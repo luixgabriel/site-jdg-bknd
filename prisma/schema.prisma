@@ -60,6 +60,7 @@ model JobOpportunity {
   stack       String[]
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
+  endDate     DateTime    @default("2023-09-25T17:43:18.122Z")
   candidates  Candidate[]
 }
 

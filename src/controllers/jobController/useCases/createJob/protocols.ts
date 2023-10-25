@@ -5,6 +5,7 @@ export interface ICreateJobParams {
   description: string
   category: string
   stack: string[]
+  endDate: Date
 }
 
 export interface ICreateJobRepository {

@@ -44,7 +44,6 @@ routes.get('/candidate/:id', async (req: Request, res: Response) => {
 // Create candidate
 routes.post(
   '/candidate',
-  withAuth,
   upload.single('CV'),
   async (req: Request, res: Response) => {
     if (req.file?.mimetype !== 'application/pdf') {
@@ -63,38 +62,29 @@ routes.post(
 )
 
 // Edit candidate
-routes.patch(
-  '/candidate/:id',
-  withAuth,
-  async (req: Request, res: Response) => {
-    const prismaEditCandidateRepository = new PrismaEditCandidateRepository()
-    const editCandidateController = new EditCandidateController(
-      prismaEditCandidateRepository,
-    )
+routes.patch('/candidate/:id', async (req: Request, res: Response) => {
+  const prismaEditCandidateRepository = new PrismaEditCandidateRepository()
+  const editCandidateController = new EditCandidateController(
+    prismaEditCandidateRepository,
+  )
 
-    if (Object.keys(req.body).length === 0 && !req.file) {
-      return res.json({
-        msg: 'At least one field must be provided for update.',
-      })
-    }
-    const { body, statusCode } = await editCandidateController.handle(req)
-    res.status(statusCode).json(body)
-  },
-)
+  if (Object.keys(req.body).length === 0 && !req.file) {
+    return res.json({
+      msg: 'At least one field must be provided for update.',
+    })
+  }
+  const { body, statusCode } = await editCandidateController.handle(req)
+  res.status(statusCode).json(body)
+})
 
 // Delete candidate
-routes.delete(
-  '/candidate/:id',
-  withAuth,
-  async (req: Request, res: Response) => {
-    const prismaDeleteCandidateRepository =
-      new PrismaDeleteCandidateRepository()
-    const deletePostController = new DeleteCandidateController(
-      prismaDeleteCandidateRepository,
-    )
-    const { body, statusCode } = await deletePostController.handle(req)
-    res.status(statusCode).json(body)
-  },
-)
+routes.delete('/candidate/:id', async (req: Request, res: Response) => {
+  const prismaDeleteCandidateRepository = new PrismaDeleteCandidateRepository()
+  const deletePostController = new DeleteCandidateController(
+    prismaDeleteCandidateRepository,
+  )
+  const { body, statusCode } = await deletePostController.handle(req)
+  res.status(statusCode).json(body)
+})
 
 export default routes

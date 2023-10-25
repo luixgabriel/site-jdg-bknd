@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "JobOpportunity" ADD COLUMN     "endDate" TIMESTAMP(3) NOT NULL DEFAULT '2023-09-25 17:43:18.122 +00:00';
