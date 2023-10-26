@@ -10,8 +10,15 @@ export class EditJobController implements IController {
   async handle(
     httpRequest: HttpRequest<IEditJobParams>,
   ): Promise<HttpResponse<JobOpportunity | any>> {
-    const body = httpRequest.body
+    let body = httpRequest.body
     const id = httpRequest.params.id
+
+    if (httpRequest.body?.endDate) {
+      body = {
+        ...body,
+        endDate: new Date(httpRequest.body?.endDate),
+      }
+    }
 
     try {
       const jobExists = await this.editJobRepository.exists(id)

@@ -5,6 +5,7 @@ export interface IEditJobParams {
   description?: string
   category?: string
   stack?: string[]
+  endDate?: Date
 }
 
 export interface IEditJobRepository {

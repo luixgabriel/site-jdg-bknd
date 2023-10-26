@@ -51,7 +51,7 @@ routes.post(
 // Edit job-opportunities
 routes.patch(
   '/job-opportunities/:id',
-  withAuth,
+
   async (req: Request, res: Response) => {
     const prismaEditJobRepository = new PrismaEditJobRepository()
     const editJobController = new EditJobController(prismaEditJobRepository)
