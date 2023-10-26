@@ -42,24 +42,19 @@ routes.get('/candidate/:id', async (req: Request, res: Response) => {
 })
 
 // Create candidate
-routes.post(
-  '/candidate',
-  upload.single('CV'),
-  async (req: Request, res: Response) => {
-    if (req.file?.mimetype !== 'application/pdf') {
-      return res.status(404).json({ msg: 'The format of the CV must be PDF.' })
-    }
-    const prismaCreateCandidateRepository =
-      new PrismaCreateCandidateRepository()
-    const prismaGetJobRepository = new PrismaGetJobRepository()
-    const createCandidateController = new CreateCandidateController(
-      prismaCreateCandidateRepository,
-      prismaGetJobRepository,
-    )
-    const { body, statusCode } = await createCandidateController.handle(req)
-    res.status(statusCode).json(body)
-  },
-)
+routes.post('/candidate', async (req: Request, res: Response) => {
+  // if (req.file?.mimetype !== 'application/pdf') {
+  //   return res.status(404).json({ msg: 'The format of the CV must be PDF.' })
+  // }
+  const prismaCreateCandidateRepository = new PrismaCreateCandidateRepository()
+  const prismaGetJobRepository = new PrismaGetJobRepository()
+  const createCandidateController = new CreateCandidateController(
+    prismaCreateCandidateRepository,
+    prismaGetJobRepository,
+  )
+  const { body, statusCode } = await createCandidateController.handle(req)
+  res.status(statusCode).json(body)
+})
 
 // Edit candidate
 routes.patch('/candidate/:id', async (req: Request, res: Response) => {
