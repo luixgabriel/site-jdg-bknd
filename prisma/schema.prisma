@@ -68,6 +68,7 @@ model Voluntary {
   id        String   @id @default(uuid())
   name      String
   email     String   @unique
+  imageUrl  String?
   stack     String[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

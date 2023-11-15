@@ -4,6 +4,7 @@ export interface ICreateVoluntaryParams {
   name: string
   email: string
   stack: string[]
+  imageUrl?: string
 }
 
 export interface ICreateVoluntaryRepository {
